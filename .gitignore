@@ -1,0 +1,2 @@
+# This file will help untrack of files to be commited. Include any files that are not needed here.
+.DS_Store
