@@ -9,6 +9,7 @@ import src.Model.User;
 import src.Service.TutorCoordinatorService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/tutorCoordinator")
@@ -33,6 +34,13 @@ public class TutorCoordinatorController {
             }
             return new ResponseEntity(u, HttpStatus.OK);
     }
-
+    @PostMapping(path = "/tutor/schedule/{username}")
+    public ResponseEntity  addTutorScheduleViaUserName(@PathVariable(required = false) String username, @RequestBody List<Availability> availabilities){
+        Iterable<Availability> availabilities1 = tutorCoordinatorService.addTutorAvailabilityByUsername(username, availabilities);
+        if (availabilities1 == null){
+            return new ResponseEntity("error.notTutor", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(availabilities1, HttpStatus.OK);
+    }
 
 }

@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -12,10 +13,10 @@ public class Availability {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long availabilityId;
-
-   private Date startTime;
-
-   private Date startEnd;
+    @NotNull
+   private String startTime;
+    @NotNull
+   private String startEnd;
 
    private String daily;
 
@@ -31,19 +32,19 @@ public class Availability {
         this.availabilityId = availabilityId;
     }
 
-    public Date getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Date getStartEnd() {
+    public String getStartEnd() {
         return startEnd;
     }
 
-    public void setStartEnd(Date startEnd) {
+    public void setStartEnd(String startEnd) {
         this.startEnd = startEnd;
     }
 

@@ -43,13 +43,19 @@ public class TutorCoordinatorService {
             return null;
     }
 
-
     public Iterable<Availability> addTutorAvailabilityByUsername(String userName, List<Availability> availabilities){
         User user = userRepository.findUserByUserName(userName);
-        if (user == null){
-            return null;
+        if (checkIfTutor(user.getRoles())) {
+            if (user == null) {
+                return null;
+            }
+            user.setAvailabilities(availabilities);
+            return availabilityRepository.saveAll(availabilities);
         }
-        user.setAvailabilities(availabilities);
-        return availabilityRepository.saveAll(availabilities);
+        return null;
+    }
+
+    public Iterable<Availability> editTutorSchedule(String username, List<Availability> availabilities){
+        return null;
     }
 }

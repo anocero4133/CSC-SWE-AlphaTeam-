@@ -10,14 +10,15 @@ import java.util.List;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     @NotNull(message = "error.title.notnull")
-    @Size(min = 5, max = 20)
+    @Size(min = 3, max = 20)
     private String firstName;
 
     @NotNull(message = "error.title.notnull")
-    @Size(min = 5, max = 20)
+    @Size(min = 3, max = 20)
     private String lastName;
     @NotNull(message = "error.title.notnull")
     @Pattern(regexp=".+@.+\\.[a-z]+", message = "error.accountprofile.email.pattern")
