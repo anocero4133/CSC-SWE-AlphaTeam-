@@ -17,7 +17,7 @@ public class Availability {
    private String startTime;
     @NotNull
    private String startEnd;
-
+    @NotNull
    private String daily;
 
     public Availability() {

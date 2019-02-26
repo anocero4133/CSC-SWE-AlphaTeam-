@@ -43,4 +43,13 @@ public class TutorCoordinatorController {
         return new ResponseEntity(availabilities1, HttpStatus.OK);
     }
 
+    @DeleteMapping(path = "/tutor/{userName}")
+    public ResponseEntity deleteUser (@PathVariable String userName) {
+        if (tutorCoordinatorService.deleteUserByUserName(userName)){
+            return new ResponseEntity("User " + userName + " has been deleted ", HttpStatus.OK) ;
+        }
+        return new ResponseEntity("User not found or user is not tutor" , HttpStatus.NOT_FOUND);
+    }
+
+
 }

@@ -35,6 +35,23 @@ public class TutorCoordinatorService {
         }
         return null;
     }
+    public boolean deleteUserByUserName(String userName){
+        User user = userRepository.findUserByUserName(userName);
+        if (user == null){return false;}
+        if (checkIfTutor(user.getRoles())) {
+            userRepository.delete(user);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteUser(User user){
+        if (checkIfTutor(user.getRoles())) {
+            userRepository.delete(user);
+            return true;
+        }
+        return false;
+    }
 
     public Iterable<Availability> addTutorAvailability(User user){
             if (checkIfTutor(user.getRoles())) {
@@ -45,10 +62,8 @@ public class TutorCoordinatorService {
 
     public Iterable<Availability> addTutorAvailabilityByUsername(String userName, List<Availability> availabilities){
         User user = userRepository.findUserByUserName(userName);
+        if (user == null) {return null;}
         if (checkIfTutor(user.getRoles())) {
-            if (user == null) {
-                return null;
-            }
             user.setAvailabilities(availabilities);
             return availabilityRepository.saveAll(availabilities);
         }
@@ -56,6 +71,12 @@ public class TutorCoordinatorService {
     }
 
     public Iterable<Availability> editTutorSchedule(String username, List<Availability> availabilities){
+        User user = userRepository.findUserByUserName(username);
+        if (user == null) {return null;}
+        if (checkIfTutor(user.getRoles())){
+            user.setAvailabilities(availabilities);
+            return availabilityRepository.saveAll(availabilities);
+        }
         return null;
     }
 }
