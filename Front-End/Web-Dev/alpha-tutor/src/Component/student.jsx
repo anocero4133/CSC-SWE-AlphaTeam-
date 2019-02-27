@@ -19,6 +19,7 @@ class Student extends Component{
             student: this.student
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event) {
@@ -29,6 +30,10 @@ class Student extends Component{
       item[name] = value;
       console.log(value)
       this.setState({ item });
+    }
+
+    async  handleSubmit(event) {
+        event.preventDefault();
     }
     render() {
       const title = <h3> Student Register</h3>;
