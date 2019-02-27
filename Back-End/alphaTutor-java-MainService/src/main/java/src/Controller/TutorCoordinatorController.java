@@ -52,4 +52,9 @@ public class TutorCoordinatorController {
     }
 
 
+    @GetMapping(path = "/tutor/all")
+    public ResponseEntity getAllTutors(){
+        return new ResponseEntity(tutorCoordinatorService.getAllTutors(), HttpStatus.OK);
+    }
+
 }

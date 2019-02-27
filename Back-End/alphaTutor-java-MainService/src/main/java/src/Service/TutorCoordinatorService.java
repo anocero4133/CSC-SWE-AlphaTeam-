@@ -9,6 +9,7 @@ import src.Model.User;
 import src.Repository.AvailabilityRepository;
 import src.Repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +19,8 @@ public class TutorCoordinatorService {
     private UserRepository userRepository;
     @Autowired
     private AvailabilityRepository availabilityRepository;
+
+
     public TutorCoordinatorService() {
     }
     private boolean checkIfTutor(List<Role> roles) {
@@ -28,7 +31,6 @@ public class TutorCoordinatorService {
         }
         return false;
     }
-
     public User addTutor(User user){
         if (checkIfTutor(user.getRoles())) {
            return  userRepository.save(user);
@@ -78,5 +80,16 @@ public class TutorCoordinatorService {
             return availabilityRepository.saveAll(availabilities);
         }
         return null;
+    }
+
+    public Iterable<User> getAllTutors(){
+        Iterable<User> allUsers = userRepository.findAll();
+        List<User> tutors = new ArrayList<>();
+        for (User user: allUsers) {
+            if (user.getRoles().contains("Tutor")){
+                tutors.add(user);
+            }
+        }
+        return tutors;
     }
 }
