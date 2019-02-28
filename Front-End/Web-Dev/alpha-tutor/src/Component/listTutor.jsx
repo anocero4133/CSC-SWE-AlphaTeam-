@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import CoordinatorAppNavBar from './CoordinatorAppNavBar';
+import StudentAppNavBar from './StudentAppNavBar';
 class listTutor extends Component{
-    render () { 
+    render () {
         return (
             <div>
-                <CoordinatorAppNavBar />
-                
+            <StudentAppNavBar/>
+
                 <Container fluid>
                     <h3> List of current tutor</h3>
                     <Table className="mt-4">

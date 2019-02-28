@@ -15,6 +15,7 @@ class App extends Component {
             <Route path="/coordinator" exact={true} component={Coordinator}/>
             <Route path="/coordinator/listTutor" exact={true} component={listTutor}/>
             <Route path="/coordinator/addTutor" exact={true} component={addTutor}/>
+            <Route path="/student/allTutors" exact={true} component={listTutor}/>
           </Switch>
 
 
