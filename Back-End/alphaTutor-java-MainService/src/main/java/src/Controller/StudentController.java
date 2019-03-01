@@ -3,10 +3,7 @@ package src.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import src.Model.User;
 import src.Service.StudentService;
 
@@ -23,5 +20,10 @@ public class StudentController {
             return new ResponseEntity("error.not Tutor", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(u, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/view")
+    public ResponseEntity view() {
+        return new ResponseEntity(studentService.viewUsers(), HttpStatus.OK);
     }
 }
