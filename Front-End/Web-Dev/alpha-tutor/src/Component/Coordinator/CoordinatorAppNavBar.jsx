@@ -17,17 +17,9 @@ export default class CoordinatorAppNavBar extends Component {
 
   render() {
     return <Navbar color="dark" dark expand="md">
-      <NavbarBrand tag={Link} to="/">Home |</NavbarBrand>
+      <NavbarBrand tag={Link} to="/coordinator">Home |</NavbarBrand>
       <NavbarBrand tag={Link} to="/coordinator/addTutor">Tutor Register |</NavbarBrand>
-      <NavbarBrand tag={Link} to="/coordinator/listTutor">Tutor List |</NavbarBrand>
       <NavbarToggler onClick={this.toggle}/>
-      <Collapse isOpen={this.state.isOpen} navbar>
-        <Nav className="ml-auto" navbar>
-          <NavItem>
-            <NavLink tag={Link} to="/subscribe">Subscribe User</NavLink>
-          </NavItem> 
-        </Nav>
-      </Collapse>
     </Navbar>;
   }
 }

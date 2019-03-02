@@ -12,8 +12,10 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping(value = "api/tutorCoordinator")
 public class TutorCoordinatorController {
+
     @Autowired
     private TutorCoordinatorService tutorCoordinatorService;
 
@@ -25,7 +27,6 @@ public class TutorCoordinatorController {
             }
             return new ResponseEntity(u, HttpStatus.OK);
     }
-
     @PostMapping(path = "/tutor/schedule")
      public ResponseEntity addTutorSchedule(@RequestBody User user){
             Iterable<Availability> u = tutorCoordinatorService.addTutorAvailability(user);

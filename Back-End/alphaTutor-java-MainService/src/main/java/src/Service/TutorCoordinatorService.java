@@ -81,12 +81,11 @@ public class TutorCoordinatorService {
         }
         return null;
     }
-
     public Iterable<User> getAllTutors(){
         Iterable<User> allUsers = userRepository.findAll();
         List<User> tutors = new ArrayList<>();
         for (User user: allUsers) {
-            if (user.getRoles().contains("Tutor")){
+            if (checkIfTutor(user.getRoles())){
                 tutors.add(user);
             }
         }

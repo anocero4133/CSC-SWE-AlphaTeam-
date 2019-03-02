@@ -2,28 +2,82 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label , Table} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { withStyles } from '@material-ui/core/styles';
-
 import CoordinatorAppNavBar from './CoordinatorAppNavBar';
-
+import swal from 'sweetalert';
+const DEVELOPMENT_URL = "http://localhost:8080/api/tutorCoordinator/tutor";
 class AddTutor extends Component{
     // Declare the items
-    student = {
-        username: '',
+    tutor = {
+        userName: '',
         password: '', 
         firstName : '',
         lastName: '',
-        email: ''
+        roles: [],
+        email: '',
+        availabilities: []
     };
+
     // Declare the constructor 
     constructor(props){
         super(props);
         this.state = {
-            student: this.student
+            tutor: this.tutor,
+            checkedItems: new Map()
         }
         this.handleChange = this.handleChange.bind(this);
+        this.handleChangeAvailability = this.handleChangeAvailability.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
+    async handleSubmit(event){
+      //{username: "ds", password: "ssdad", firstname: "sdadsad", lastname: "dadsda"}
+      event.preventDefault(); 
+      const { item } = this.state;
+      console.log(item)
+      var tutor = this.state.tutor ;
+      tutor.userName = item["username"];
+      tutor.password = item["password"];
+      tutor.firstName = item["firstname"];
+      tutor.lastName = item["lastname"];
+      tutor.email = item["email"];
+      var checkItems = this.state.checkedItems;
+      for (let [k, v] of checkItems) {
+        if (v === true){
+            var res = k.split(",");
+            var time = res[1].replace("to","").split(" ")
+            var availability = 
+            {
+              daily: res[0],
+              startEnd: time[3] ,
+              startTime: time[1]
+            } 
+            tutor.availabilities.push(availability) 
+        }
+    }
+      var role = {
+          "description": "CS tutor at GSU",
+          "roleName": "Tutor"
+      }
+      tutor.roles.push(role);
+      var body = JSON.stringify(tutor);
+      await fetch(DEVELOPMENT_URL, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: body
+      }).then((response) => {
+        if (response['status'] === 403) {
+        } else {
+          swal("Great! Tutor is saved");
+          tutor.availabilities = [] 
+          this.props.history.push('/coordinator/addTutor');
+        }
+      }
+      );
+        console.log(body);
 
+    }
     handleChange(event) {
       const target = event.target;
       const value = target.value;
@@ -33,13 +87,28 @@ class AddTutor extends Component{
       console.log(value)
       this.setState({ item });
     }
+    handleChangeAvailability(event){ 
+      const item = event.target.name;
+    const isChecked = event.target.checked;
+    this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }), () => console.log(this.state.checkedItems));
+    }
 
     render() {
       const title = <h3> Tutor Register</h3>;
-      var array = ["10:00 to 10:30", "10:30 to 11:00", "11:30 to 12:00", "12:00 to 12:30", "12:30 to 13:00", "13:00 to 13:30", "13:30 to 14:00", "14:00 to 14:30", "14:30 to 15:00", "15:00 to 15:30", "15:30 to 16:00", "16:00 to 16:30", "16:30 to 17:00"]
-      const checkBoxes = array.map(arr => {
-          return <td key={arr}> <input type="checkbox"/> </td>
+      var array = ["10:00 to 10:30", "10:30 to 11:00","11:00 to 11:30", "11:30 to 12:00", "12:00 to 12:30", "12:30 to 13:00", "13:00 to 13:30", "13:30 to 14:00", "14:00 to 14:30", "14:30 to 15:00", "15:00 to 15:30", "15:30 to 16:00", "16:00 to 16:30", "16:30 to 17:00"]
+      const checkBoxesForMonday = array.map(arr => {
+          return <td > <input type="checkbox" name={"Monday, " + arr} checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability}/> </td>
       })
+      const checkBoxesForTuesday = array.map(arr => {
+          return <td > <input name={"Tuesday, " + arr} checked={this.state.checkedItems.get(arr)} type="checkbox" onChange={this.handleChangeAvailability}/> </td>
+      })
+      const checkBoxesForWednesday = array.map(arr => {
+        return <td > <input name={"Wednesday, " + arr} checked={this.state.checkedItems.get(arr)} type="checkbox" onChange={this.handleChangeAvailability}/> </td>      })
+      const checkBoxesForThursday = array.map(arr => {
+        return <td > <input name={"Thursday, " + arr} checked={this.state.checkedItems.get(arr)} type="checkbox" onChange={this.handleChangeAvailability}/> </td>      })
+      const checkBoxesForFriday = array.map(arr => {
+        return <td > <input name={"Friday, " + arr} checked={this.state.checkedItems.get(arr)} type="checkbox" onChange={this.handleChangeAvailability}/> </td>      })
+
       return <div>
           <CoordinatorAppNavBar/>
         <Container>
@@ -58,8 +127,8 @@ class AddTutor extends Component{
             </FormGroup>
             <FormGroup className="col-md-4 mb-3">
                 <Label for="email">Email</Label>
-                <Input type="email" name="firstname" id="firstname" required
-                  onChange={this.handleChange} autoComplete="firstname" />
+                <Input type="email" name="email" id="email" required
+                  onChange={this.handleChange} autoComplete="email" />
               </FormGroup>
         </div>
             <div className="row">
@@ -75,6 +144,7 @@ class AddTutor extends Component{
               </FormGroup>
             </div>
             <div>
+              <FormGroup className="col-md-4 mb-3">
             <Table striped bordered hover size="sm">
                                   <thead>
                                     <tr>
@@ -97,27 +167,29 @@ class AddTutor extends Component{
                                   <tbody>
                                     <tr>
                                       <td>Monday</td>
-                                      {checkBoxes} 
+                                      {checkBoxesForMonday} 
                                     </tr>
                                     <tr>
                                       <td>Tuesday</td>
-                                      {checkBoxes}  
+                                      {checkBoxesForTuesday}  
                                     </tr>
                                     <tr>
                                       <td>Wednesday</td>
-                                      {checkBoxes} 
+                                      {checkBoxesForWednesday} 
                                     </tr> 
                                     <tr>
                                       <td>Thursday</td>
-                                      {checkBoxes}  
+                                      {checkBoxesForThursday}  
                                     </tr>
                                     <tr>
                                       <td>Friday</td>
-                                      {checkBoxes}  
+                                      {checkBoxesForFriday}  
                                     </tr>
                                   </tbody>
                                 </Table>
+                                </FormGroup>
               </div>
+          
             <FormGroup className="col-md-4 mb-3">
               <Button color="primary" type="submit">Save</Button>{' '}
               <Button color="secondary" tag={Link} to="/">Cancel</Button>

@@ -1,5 +1,7 @@
 package src.Model;
 
+import org.springframework.beans.factory.annotation.Required;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -30,6 +32,7 @@ public class User {
     @Size(min = 8, message = "Minimum password length: 8 characters")
     private String password;
 
+    @NotNull
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns
             = @JoinColumn(name = "user_id",
@@ -37,7 +40,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id",
                     referencedColumnName = "id"))
     private List<Role> roles;
-
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "tutor_courses", joinColumns
