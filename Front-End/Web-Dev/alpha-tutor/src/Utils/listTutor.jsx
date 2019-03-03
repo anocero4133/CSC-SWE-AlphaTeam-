@@ -3,7 +3,9 @@ import { Link, withRouter } from 'react-router-dom';
 import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import Loading from './Loading'
 import swal from 'sweetalert';
-var DEVELOPMENT_URL = "https://tutor-service.herokuapp.com"
+
+var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com/"
+
 export default class ListTutor extends Component{
     constructor(props){
             super(props);

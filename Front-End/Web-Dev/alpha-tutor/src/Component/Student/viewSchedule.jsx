@@ -4,8 +4,7 @@ import { Button, Container, Form, FormGroup, Input, Label , Table} from 'reactst
 import 'bootstrap/dist/css/bootstrap.min.css';
 import StudentAppNavBar from './StudentAppNavBar';
 import ReactSearchBox from 'react-search-box'
-var DEVELOPMENT_URL = "https://tutor-service.herokuapp.com"
-
+var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com/"
 export default class ViewSchedule extends Component{ 
     constructor(props){
         super(props);

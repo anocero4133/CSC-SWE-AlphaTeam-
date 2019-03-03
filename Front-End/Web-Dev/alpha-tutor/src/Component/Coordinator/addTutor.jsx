@@ -4,8 +4,7 @@ import { Button, Container, Form, FormGroup, Input, Label , Table} from 'reactst
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CoordinatorAppNavBar from './CoordinatorAppNavBar';
 import swal from 'sweetalert';
-var DEVELOPMENT_URL = "https://tutor-service.herokuapp.com"
-// const DEVELOPMENT_URL = "http://localhost:8080/api/tutorCoordinator/tutor";
+var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com/"
 class AddTutor extends Component{
     // Declare the items
     tutor = {
