@@ -4,7 +4,8 @@ import { Button, Container, Form, FormGroup, Input, Label , Table} from 'reactst
 import 'bootstrap/dist/css/bootstrap.min.css';
 import StudentAppNavBar from './StudentAppNavBar';
 import ReactSearchBox from 'react-search-box'
-const DEVELOPMENT_URL = "http://localhost:8080";
+var DEVELOPMENT_URL = "https://tutor-service.herokuapp.com"
+
 export default class ViewSchedule extends Component{ 
     constructor(props){
         super(props);
@@ -21,6 +22,7 @@ export default class ViewSchedule extends Component{
     tutorSearchName = []
     async fetchAllTutors () { 
         var url = DEVELOPMENT_URL + "/api/tutorCoordinator/tutor/all"
+        console.log(url);
         const response = await fetch(url);
         const body = await response.json();
         var arrTutors = []
