@@ -4,7 +4,8 @@ import { Button, Container, Form, FormGroup, Input, Label , Table} from 'reactst
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CoordinatorAppNavBar from './CoordinatorAppNavBar';
 import swal from 'sweetalert';
-const DEVELOPMENT_URL = "http://localhost:8080/api/tutorCoordinator/tutor";
+import DEVELOPMENT_URL from '../../Utils/DeploymentUrl'
+// const DEVELOPMENT_URL = "http://localhost:8080/api/tutorCoordinator/tutor";
 class AddTutor extends Component{
     // Declare the items
     tutor = {
@@ -82,7 +83,8 @@ class AddTutor extends Component{
       }
       tutor.roles.push(role);
       var body = JSON.stringify(tutor);
-      await fetch(DEVELOPMENT_URL, {
+      var url = DEVELOPMENT_URL + "/api/tutorCoordinator/tutor";
+      await fetch(url, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
