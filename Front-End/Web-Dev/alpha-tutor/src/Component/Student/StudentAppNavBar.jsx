@@ -17,7 +17,6 @@ export default class StudentAppNavBar extends Component {
 
   render() {
     return <Navbar color="dark" dark expand="md">
-      <NavbarBrand tag={Link} to="/student/allTutors">See Tutors |</NavbarBrand>
       <NavbarBrand tag={Link} to="/student/viewSchedule">See Schedule |</NavbarBrand>
       <NavbarToggler onClick={this.toggle}/>
 

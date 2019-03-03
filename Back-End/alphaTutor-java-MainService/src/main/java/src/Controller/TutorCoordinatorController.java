@@ -18,7 +18,6 @@ public class TutorCoordinatorController {
 
     @Autowired
     private TutorCoordinatorService tutorCoordinatorService;
-
     @PostMapping(path = "/tutor")
     public ResponseEntity addTutor(@RequestBody User user){
             User u = tutorCoordinatorService.addTutor(user);

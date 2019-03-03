@@ -32,6 +32,12 @@ public class TutorCoordinatorService {
         return false;
     }
     public User addTutor(User user){
+        if (userRepository.findUserByUserName(user.getUserName()) != null){
+            return null;
+        }
+        if (userRepository.findUserByEmail(user.getEmail()) != null){
+            return null;
+        }
         if (checkIfTutor(user.getRoles())) {
            return  userRepository.save(user);
         }
@@ -91,4 +97,6 @@ public class TutorCoordinatorService {
         }
         return tutors;
     }
+
+
 }

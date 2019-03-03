@@ -28,17 +28,37 @@ class AddTutor extends Component{
         this.handleChangeAvailability = this.handleChangeAvailability.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+    validation(tutor){
+      if (tutor.firstName.length < 3 || tutor.firstName > 20){
+        swal("Invalid input", "First name size from 3 to 20", "error");
+        return false;
+      }else if (tutor.lastName.length < 3 || tutor.lastName > 20){
+        swal("Invalid input", "Last name size from 3 to 20", "error");
+        return false;
+      }else if (tutor.password.length < 8){
+        swal("Invalid input", "Minimum password length: 8 characters", "error");
+        return false;
+      }else if (tutor.availabilities.length < 1){
+        swal("Invalid input", tutor.firstName + " has no schedule at this point", "error");
+        return false
+      }else if (tutor.availabilities.length > 20 ){
+        swal("Invalid input", tutor.firstName + " has exceed 10 hours of work", "error");
+        return false
+      }
+      return true;
+    }
+
     async handleSubmit(event){
       //{username: "ds", password: "ssdad", firstname: "sdadsad", lastname: "dadsda"}
       event.preventDefault(); 
       const { item } = this.state;
-      console.log(item)
       var tutor = this.state.tutor ;
       tutor.userName = item["username"];
       tutor.password = item["password"];
       tutor.firstName = item["firstname"];
       tutor.lastName = item["lastname"];
       tutor.email = item["email"];
+   
       var checkItems = this.state.checkedItems;
       for (let [k, v] of checkItems) {
         if (v === true){
@@ -52,6 +72,9 @@ class AddTutor extends Component{
             } 
             tutor.availabilities.push(availability) 
         }
+    }
+    if (this.validation(tutor) === false){
+      return;
     }
       var role = {
           "description": "CS tutor at GSU",
@@ -67,7 +90,11 @@ class AddTutor extends Component{
         },
         body: body
       }).then((response) => {
-        if (response['status'] === 403) {
+        var errorCodes = [400, 401, 402, 403]
+        console.log(response)
+        if (errorCodes.includes(response['status']) ) {
+          swal("Error", "Tutor is registered", "error");
+
         } else {
           swal("Great! Tutor is saved");
           tutor.availabilities = [] 
@@ -84,7 +111,6 @@ class AddTutor extends Component{
       const name = target.name;
       let item = { ...this.state.item };
       item[name] = value;
-      console.log(value)
       this.setState({ item });
     }
     handleChangeAvailability(event){ 
@@ -154,7 +180,8 @@ class AddTutor extends Component{
                                       <th>11:00 to 11:30</th>
                                       <th>11:30 to 12:00</th>
                                       <th>12:00 to 12:30</th>
-                                      <th>12:30 to 13:30</th>
+                                      <th>12:30 to 13:00</th>
+                                      <th>13:00 to 13:30</th>
                                       <th>13:30 to 14:00</th>
                                       <th>14:00 to 14:30</th>
                                       <th>14:30 to 15:00</th>
