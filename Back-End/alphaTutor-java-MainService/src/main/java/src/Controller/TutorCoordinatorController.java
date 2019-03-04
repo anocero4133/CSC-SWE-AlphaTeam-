@@ -12,8 +12,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:3000")
-@CrossOrigin(origins = "https://tutor-gsu.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "https://tutor-gsu.herokuapp.com")
 @RequestMapping(value = "api/tutorCoordinator")
 public class TutorCoordinatorController {
 

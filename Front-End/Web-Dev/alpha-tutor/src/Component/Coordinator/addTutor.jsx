@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label , Table} from 'reactstrap';
+import { Button, Container, Form, FormGroup, Input, Label ,ButtonGroup, Table} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CoordinatorAppNavBar from './CoordinatorAppNavBar';
 import swal from 'sweetalert';
-var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com/"
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+
+const Swal = require('sweetalert2');
+var DEVELOPMENT_URL = "http://localhost:8080"
+// var PRODUTION_URL = "https://tutor-service-back-end.herokuapp.com/"
 class AddTutor extends Component{
     // Declare the items
     tutor = {
@@ -14,7 +18,8 @@ class AddTutor extends Component{
         lastName: '',
         roles: [],
         email: '',
-        availabilities: []
+        availabilities: [],
+        courses: []
     };
 
     // Declare the constructor 
@@ -22,11 +27,18 @@ class AddTutor extends Component{
         super(props);
         this.state = {
             tutor: this.tutor,
-            checkedItems: new Map()
+            checkedItems: new Map(),
+            coursesSelected : [],
+            isCourseLoaded: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeAvailability = this.handleChangeAvailability.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCoursesPopUp  = this.handleCoursesPopUp.bind(this)
+        this.removeCourseSelected = this.removeCourseSelected.bind(this)
+    }
+    componentDidMount() {
+      document.title = "Add tutor";
     }
     validation(tutor){
       if (tutor.firstName.length < 3 || tutor.firstName > 20){
@@ -44,6 +56,9 @@ class AddTutor extends Component{
       }else if (tutor.availabilities.length > 20 ){
         swal("Invalid input", tutor.firstName + " has exceed 10 hours of work", "error");
         return false
+      }else if (tutor.courses.length < 1){
+        swal("Invalid input", "Course not selected", "error");
+        return false 
       }
       return true;
     }
@@ -60,6 +75,8 @@ class AddTutor extends Component{
       tutor.email = item["email"];
    
       var checkItems = this.state.checkedItems;
+
+      // insert into the  availability
       for (let [k, v] of checkItems) {
         if (v === true){
             var res = k.split(",");
@@ -73,14 +90,31 @@ class AddTutor extends Component{
             tutor.availabilities.push(availability) 
         }
     }
+    // Insert into the courses
+    var courses = this.state.coursesSelected
+    for (var i  = 0 ; i < courses.length; ++i){
+          var course = courses[i].split(",");
+          var aCourse = {
+            "courseCRN": course[0],
+            "csCourseName" : course[1]
+          }
+          tutor.courses.push(aCourse)
+    }
+    console.log(tutor.courses)
     if (this.validation(tutor) === false){
       return;
     }
-      var role = {
+      var tutorRole = {
           "description": "CS tutor at GSU",
           "roleName": "Tutor"
       }
-      tutor.roles.push(role);
+      var studentRole = {
+        "description": "CS student at GSU",
+        "roleName": "Student" 
+      }
+
+      tutor.roles.push(tutorRole);
+      tutor.roles.push(studentRole)
       var body = JSON.stringify(tutor);
       var url = DEVELOPMENT_URL + "/api/tutorCoordinator/tutor";
       await fetch(url, {
@@ -99,11 +133,10 @@ class AddTutor extends Component{
         } else {
           swal("Great! Tutor is saved");
           tutor.availabilities = [] 
-          this.props.history.push('/coordinator/addTutor');
+          this.props.history.push('/coordinator');
         }
       }
       );
-        console.log(body);
 
     }
     handleChange(event) {
@@ -120,26 +153,82 @@ class AddTutor extends Component{
     this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }), () => console.log(this.state.checkedItems));
     }
 
+    async handleCoursesPopUp() { 
+      const inputOptions = new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+              'CSC 2510, Theoretical Foundations of Computer Science': 'CSC 2510-Theoretical Foundations of Computer Science',
+              'CSC 2720, Data Structures': 'CSC 2720-Data Structures',
+              'CSC 3210,Computer Organization & Programming': 'CSC 3210-Computer Organization Programming',
+              'CSC 3320,System-Level Programming': 'CSC 3320-System Level Programming'
+              
+          })
+        }, 2000)
+      })
+      const {value: course} = await Swal.fire({
+        title: 'Select course',
+        input: 'select',
+        inputOptions:inputOptions ,
+        inputPlaceholder: 'Select a course',
+        showCancelButton: true,
+        inputValidator: (value) => {
+          return !value && 'You need to choose the course!'
+        }
+      })
+      if (course) {
+        if(this.state.coursesSelected.includes(course)){
+            return;
+        }
+        this.setState({
+            coursesSelected : [...this.state.coursesSelected, course]
+        })
+      }
+      console.log(this.state.coursesSelected)
+    }
+
+    removeCourseSelected(courseName){
+      let updatedCoursesSelected = [...this.state.coursesSelected].filter(i => i !== courseName);
+      this.setState({ coursesSelected: updatedCoursesSelected })
+    }
+
+
     render() {
+      const { classes } = this.props;
+
       const title = <h3> Tutor Register</h3>;
       var array = ["10:00 to 10:30", "10:30 to 11:00","11:00 to 11:30", "11:30 to 12:00", "12:00 to 12:30", "12:30 to 13:00", "13:00 to 13:30", "13:30 to 14:00", "14:00 to 14:30", "14:30 to 15:00", "15:00 to 15:30", "15:30 to 16:00", "16:00 to 16:30", "16:30 to 17:00"]
       const checkBoxesForMonday = array.map(arr => {
-          return <td > <input type="checkbox" name={"Monday, " + arr} checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability}/> </td>
+          return  <td><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Monday, " + arr} color="primary" />}/></td>
       })
       const checkBoxesForTuesday = array.map(arr => {
-          return <td > <input name={"Tuesday, " + arr} checked={this.state.checkedItems.get(arr)} type="checkbox" onChange={this.handleChangeAvailability}/> </td>
+        return  <td><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Tuesday, " + arr} color="primary" />}/></td>
       })
       const checkBoxesForWednesday = array.map(arr => {
-        return <td > <input name={"Wednesday, " + arr} checked={this.state.checkedItems.get(arr)} type="checkbox" onChange={this.handleChangeAvailability}/> </td>      })
+        return  <td><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Wednesday, " + arr} color="primary" />}/></td>
+       })
       const checkBoxesForThursday = array.map(arr => {
-        return <td > <input name={"Thursday, " + arr} checked={this.state.checkedItems.get(arr)} type="checkbox" onChange={this.handleChangeAvailability}/> </td>      })
+        return  <td><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Thursday, " + arr} color="primary" />}/></td>
+        })
       const checkBoxesForFriday = array.map(arr => {
-        return <td > <input name={"Friday, " + arr} checked={this.state.checkedItems.get(arr)} type="checkbox" onChange={this.handleChangeAvailability}/> </td>      })
-
+        return  <td><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Friday, " + arr} color="primary" />}/></td>
+        })
+      const courseSelected = this.state.coursesSelected.map(arr=>{
+          return (
+              <tr>
+                <td>{arr}</td>
+                <td>
+                    <ButtonGroup>
+                        <Button size="sm" color="danger" onClick={() => this.removeCourseSelected(arr)}>Delete</Button>
+                    </ButtonGroup>
+                </td>
+              </tr> 
+          )
+      })
       return <div>
-          <CoordinatorAppNavBar/>
+          {/* <CoordinatorAppNavBar/> */}
         <Container>
           {title}
+          
           <Form onSubmit={this.handleSubmit}>
             <div className="row">
             <FormGroup className="col-md-4 mb-3">
@@ -154,6 +243,7 @@ class AddTutor extends Component{
             </FormGroup>
             <FormGroup className="col-md-4 mb-3">
                 <Label for="email">Email</Label>
+                
                 <Input type="email" name="email" id="email" required
                   onChange={this.handleChange} autoComplete="email" />
               </FormGroup>
@@ -217,15 +307,35 @@ class AddTutor extends Component{
                                 </Table>
                                 </FormGroup>
               </div>
+              <div>
+              <FormGroup className="col-md-4 mb-3">
+            <Table striped bordered hover size="sm">
+              <tbody>
+                <tr>
+                <td>Courses</td>
+                <td>Delete</td>
+                </tr>
+                {courseSelected}
+              </tbody>
+              
+            </Table>
+            <Button onClick={this.handleCoursesPopUp}>
+                Add Courses 
+            </Button>
+
+            </FormGroup>
+            </div>
           
             <FormGroup className="col-md-4 mb-3">
               <Button color="primary" type="submit">Save</Button>{' '}
               <Button color="secondary" tag={Link} to="/">Cancel</Button>
             </FormGroup>
+            
           </Form>
+          
         </Container>
       </div>
     }
 }
 
-export default withRouter(AddTutor);
+export default withRouter (AddTutor);

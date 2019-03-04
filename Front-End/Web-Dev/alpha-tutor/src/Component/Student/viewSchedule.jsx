@@ -4,7 +4,8 @@ import { Button, Container, Form, FormGroup, Input, Label , Table} from 'reactst
 import 'bootstrap/dist/css/bootstrap.min.css';
 import StudentAppNavBar from './StudentAppNavBar';
 import ReactSearchBox from 'react-search-box'
-var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com/"
+var DEVELOPMENT_URL = "http://localhost:8080"
+// var PRODUTION_URL = "https://tutor-service-back-end.herokuapp.com/
 export default class ViewSchedule extends Component{ 
     constructor(props){
         super(props);
@@ -103,7 +104,6 @@ export default class ViewSchedule extends Component{
         return (
             <div>
             <StudentAppNavBar/>
-            
             <ReactSearchBox
         placeholder="Search tutor"
         value="Doe"
@@ -111,8 +111,9 @@ export default class ViewSchedule extends Component{
         onSelect={record => this.setState({isSearchTutor: true, searchName: record['value'] })
         }
         onChange={record => this.handleIfSearchingEmpty(record)}
-
       />
+        
+
             <Table striped bordered hover size="sm">
             <thead>
               <tr>

@@ -1,12 +1,11 @@
 import React, { Component  } from 'react';
-import CoordinatorAppNavBar from './CoordinatorAppNavBar.jsx'
-import ListTutor from '../../Utils/listTutor';
+import SimpleTabs from './CoordinatorAppNavBar.jsx'
+import ListTutor from './listTutor';
 class Coordinator extends Component{
     render() {
         return (
             <div>
-            <CoordinatorAppNavBar/>
-            <ListTutor/>
+            <SimpleTabs/>
             </div>
         );
     }

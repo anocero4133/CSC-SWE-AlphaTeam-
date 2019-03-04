@@ -1,25 +1,60 @@
-import React, { Component } from 'react';
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import AddTutor from './addTutor';
+import ListTutor from './listTutor';
+function TabContainer(props) {
+  return (
+    <Typography component="div" style={{ padding: 8 * 3 }}>
+      {props.children}
+    </Typography>
+  );
+}
 
-export default class CoordinatorAppNavBar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {isOpen: false};
-    this.toggle = this.toggle.bind(this);
-  }
+TabContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+});
 
+class SimpleTabs extends React.Component {
+  state = {
+    value: 0,
+  };
+
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
   render() {
-    return <Navbar color="dark" dark expand="md">
-      <NavbarBrand tag={Link} to="/coordinator">Home |</NavbarBrand>
-      <NavbarBrand tag={Link} to="/coordinator/addTutor">Tutor Register |</NavbarBrand>
-      <NavbarToggler onClick={this.toggle}/>
-    </Navbar>;
+    const { classes } = this.props;
+    const { value } = this.state;
+
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Tabs value={value} onChange={this.handleChange}>
+            <Tab label="Add Tutor" />
+            <Tab label="All Tutors" />
+          </Tabs>
+        </AppBar>
+        {value === 0 && <TabContainer><AddTutor/></TabContainer>}
+        {value === 1 && <TabContainer><ListTutor/></TabContainer>}
+      </div>
+    );
   }
 }
+
+SimpleTabs.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(SimpleTabs);
