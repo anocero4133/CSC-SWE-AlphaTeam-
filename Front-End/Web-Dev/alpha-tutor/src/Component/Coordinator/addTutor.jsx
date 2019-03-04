@@ -5,10 +5,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import swal from 'sweetalert';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-
+import classNames from 'classnames';
+import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
 const Swal = require('sweetalert2');
-var DEVELOPMENT_URL = "http://localhost:8080"
-// var PRODUTION_URL = "https://tutor-service-back-end.herokuapp.com/"
+// var DEVELOPMENT_URL = "http://localhost:8080"
+var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
+
 class AddTutor extends Component{
     // Declare the items
     tutor = {
@@ -145,6 +148,7 @@ class AddTutor extends Component{
       const name = target.name;
       let item = { ...this.state.item };
       item[name] = value;
+      console.log(item)
       this.setState({ item });
     }
     handleChangeAvailability(event){ 
@@ -226,38 +230,71 @@ class AddTutor extends Component{
       })
       return <div>
           {/* <CoordinatorAppNavBar/> */}
+          
         <Container>
           {title}
           
           <Form onSubmit={this.handleSubmit}>
             <div className="row">
             <FormGroup className="col-md-4 mb-3">
-              <Label for="username">Username</Label>
-              <Input type="text" name="username" id="username" required
-                onChange={this.handleChange} autoComplete="username" />
+                 <TextField
+                          id="username"
+                          label="Username"
+                          // className={classes.textField}
+                          name="username"
+                          onChange={this.handleChange}
+                          autoComplete="username"
+                          margin="normal"
+                          required
+                        />
             </FormGroup>
             <FormGroup className="col-md-4 mb-3">
-              <Label for="password">Password</Label>
-              <Input type="text" name="password" id="password" required
-                onChange={this.handleChange} autoComplete="password" />
+                <TextField
+                      id="password"
+                      label="Password"
+                      name="password"
+                      onChange={this.handleChange}
+                      type="password"
+                      autoComplete="current-password"
+                      margin="normal"
+                      required
+                    />
             </FormGroup>
             <FormGroup className="col-md-4 mb-3">
-                <Label for="email">Email</Label>
-                
-                <Input type="email" name="email" id="email" required
-                  onChange={this.handleChange} autoComplete="email" />
+               <TextField
+                      id="outlined-email-input"
+                      label="Email"
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      margin="normal"
+                      required
+                      onChange={this.handleChange}
+                    />
               </FormGroup>
         </div>
             <div className="row">
               <FormGroup className="col-md-4 mb-3">
-                <Label for="firstname">First Name</Label>
-                <Input type="text" name="firstname" id="firstname" required
-                  onChange={this.handleChange} autoComplete="firstname" />
+                <TextField
+                      id="firstname"
+                      required
+                      label="First name"
+                      name="firstname"
+                      onChange={this.handleChange}
+                      autoComplete="firstname"
+                      margin="normal"
+                    />
               </FormGroup>
               <FormGroup className="col-md-5 mb-3">
-                <Label for="lastname">Last Name</Label>
-                <Input type="text" name="lastname" id="lastname" required
-                  onChange={this.handleChange} autoComplete="lastname" />
+                  <TextField
+                      id="lastname"
+                      label="Last name"
+                      name="lastname"
+                      onChange={this.handleChange}
+                      autoComplete="lastname"
+                      margin="normal"
+                      required
+                    />
               </FormGroup>
             </div>
             <div>
@@ -337,5 +374,4 @@ class AddTutor extends Component{
       </div>
     }
 }
-
 export default withRouter (AddTutor);

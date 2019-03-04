@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import AddTutor from './addTutor';
 import ListTutor from './listTutor';
+import AlignItemsList from '../Others/AboutUs'
 function TabContainer(props) {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
@@ -44,10 +45,12 @@ class SimpleTabs extends React.Component {
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="Add Tutor" />
             <Tab label="All Tutors" />
+            <Tab label="Support" />
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer><AddTutor/></TabContainer>}
         {value === 1 && <TabContainer><ListTutor/></TabContainer>}
+        {value === 2 && <TabContainer><AlignItemsList/></TabContainer>}
       </div>
     );
   }

@@ -1,19 +1,21 @@
 import React, {Component} from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button, ButtonGroup, Container, Table } from 'reactstrap';
+import {  ButtonGroup, Container, Table } from 'reactstrap';
 import CircularIndeterminate from '../../Utils/Loading'
 import swal from 'sweetalert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 
-var DEVELOPMENT_URL = "http://localhost:8080"
-// var PRODUTION_URL = "https://tutor-service-back-end.herokuapp.com/
+// var DEVELOPMENT_URL = "http://localhost:8080"
+var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
  class ListTutor extends Component{
     constructor(props){
             super(props);
             this.state = {
                 groups:[], 
-                isLoading:  true
+                isLoading:  true,
+                isDelete: false
             }
     }
 
@@ -39,7 +41,7 @@ var DEVELOPMENT_URL = "http://localhost:8080"
         )
         console.log(this.state.groups);
     }
-
+    
     async remove(username) {
         const url = DEVELOPMENT_URL + "/api/tutorCoordinator/tutor/" + username;
         await fetch(url, {
@@ -73,12 +75,13 @@ var DEVELOPMENT_URL = "http://localhost:8080"
                 <td>{group['email']}</td>
                 <td>{group['username']}</td>
                 <td>
-                    {/* <ButtonGroup>
-                        <Button size="sm" color="danger" onClick={() => this.remove(group['username'])}>Delete</Button>
-                    </ButtonGroup> */}
-                    <IconButton aria-label="Delete"  onClick={() => this.remove(group['username'])}>
+                    {/* <IconButton aria-label="Delete"  onClick={() => this.remove(group['username'])}>
                       <DeleteIcon />
-                         </IconButton>
+                         </IconButton> */}
+                         <Button size="small" variant="contained" color="secondary" onClick={() => this.remove(group['username'])}>
+                                Delete
+                                <DeleteIcon  />
+                            </Button>
                 </td>
             </tr>
         });

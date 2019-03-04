@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d1bf0707-2628-4263-b99d-4f47d0250b4f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/IndexController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/TutorCoordinatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/TutorCoordinatorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/alphaTutor-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/alphaTutor-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/alphaTutor-1.0-SNAPSHOT.jar.original" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/alphaTutor-1.0-SNAPSHOT.jar.original" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Controller/StudentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Controller/StudentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Controller/TutorCoordinatorController.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Controller/TutorCoordinatorController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Model/Availability.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Model/Availability.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Model/CSCourses.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Model/CSCourses.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Model/DailyEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Model/DailyEnum.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Model/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Model/Role.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Repository/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Repository/UserRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Service/StudentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Service/StudentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Service/TutorCoordinatorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/Service/TutorCoordinatorService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/alphaTutorApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/classes/src/alphaTutorApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-    </list>
+    <list default="true" id="d1bf0707-2628-4263-b99d-4f47d0250b4f" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,10 +21,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TutorCoordinatorController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TutorCoordinatorController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/TutorCoordinatorController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="73">
+            <state relative-caret-position="435">
               <caret line="38" column="22" lean-forward="true" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
             </state>
           </provider>
@@ -67,7 +48,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IndexController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="IndexController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/IndexController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
@@ -359,12 +340,12 @@
       <updated>1550963462420</updated>
       <workItem from="1550963466690" duration="5804000" />
       <workItem from="1551627104505" duration="1531000" />
-      <workItem from="1551710533088" duration="1211000" />
+      <workItem from="1551710533088" duration="1540000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8546000" />
+    <option name="totallyTimeSpent" value="8875000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -630,13 +611,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/StudentController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Service/TutorCoordinatorService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -644,17 +618,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/TutorCoordinatorController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="38" column="22" lean-forward="true" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/StudentController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/IndexController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/TutorCoordinatorController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="38" column="22" lean-forward="true" selection-start-line="38" selection-start-column="22" selection-end-line="38" selection-end-column="22" />
         </state>
       </provider>
     </entry>
