@@ -3,11 +3,8 @@ import {
     Card, Button, CardImg, CardTitle, CardText, CardDeck,
     CardSubtitle, CardBody
 } from 'reactstrap';
-import Icon from '@material-ui/core/Icon';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import DeleteIcon from '@material-ui/icons/Delete';
-
 import Fab from '@material-ui/core/Fab';
 const styles = theme => ({
     button: {
@@ -27,6 +24,9 @@ class AlignItemsList extends React.Component {
     handleClick() {
         console.log("hello")
     };
+    componentDidMount(){
+        document.title="Support"
+      }
     render() {
         const { classes } = this.props;
         return (
@@ -52,11 +52,13 @@ class AlignItemsList extends React.Component {
                     </CardBody>
                 </Card>
                 <Card>
-                    <CardImg top width="50%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=256&h=180" alt="Card image cap" />
+                    <CardImg top width="50%" src="https://s3.us-east-2.amazonaws.com/rcs-demo/others/IMG_9132.JPG" alt="Card image cap" />
                     <CardBody>
                         <CardTitle>Fatima Barry</CardTitle>
                         <CardSubtitle>Front-end Developer</CardSubtitle>
-                        <CardText></CardText>
+                        <CardText>Hi, I am responsible for creating GUI, UX and UI design for the app. If you have any 
+                            feedback on the app design. Please ping me!
+                        </CardText>
                         <Button color="primary">Ping me</Button>
                     </CardBody>
                 </Card>
