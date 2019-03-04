@@ -7,8 +7,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 
-var DEVELOPMENT_URL = "http://localhost:8080"
-// var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
+// var DEVELOPMENT_URL = "http://localhost:8080"
+var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
  class ListTutor extends Component{
     constructor(props){
             super(props);
