@@ -10,4 +10,5 @@ import src.Model.User;
 public interface UserRepository extends CrudRepository<User , Long>{
     User findUserByUserName(String username);
     User findUserByEmail(String email);
+    User findUserByUserNameAndPassword(String username, String password);
 }
