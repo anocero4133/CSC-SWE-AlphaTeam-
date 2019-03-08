@@ -19,6 +19,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping(path = "/api/auth")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
     @Autowired
     private JavaMailSender sender;
@@ -89,4 +90,8 @@ public class AuthController {
         return new ResponseEntity(userRepository.save(user), HttpStatus.OK);
     }
 
+    @GetMapping(path = "/api/auth/{username}/{password}")
+    public User validateUser(@PathVariable String username, @PathVariable String password){
+        User user = userRepositorydd.
+    }
 }
