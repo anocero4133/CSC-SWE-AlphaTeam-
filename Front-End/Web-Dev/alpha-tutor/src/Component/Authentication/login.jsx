@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {  Form, FormGroup,ButtonGroup} from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
-
+//thong is bad 
 const DEVELOPMENT_URL = "http://localhost:8080/api/auth/login/";
 
-class Login extends Component { 
+class Login extends Component {
     constructor(props){
         super(props);
         this.handleChangeUsername = this.handleChangeUsername.bind(this);
@@ -17,7 +17,7 @@ class Login extends Component {
         'username': '',
         'password' : ''
     }
-    async handleSubmit(event) { 
+    async handleSubmit(event) {
         event.preventDefault
         var body = JSON.stringify(this.logInfo);
         await fetch(DEVELOPMENT_URL, {
@@ -32,15 +32,15 @@ class Login extends Component {
           }
           );
 
-    } 
+    }
 
-    handleChangePassword(event){ 
-            const value = event.target.value; 
+    handleChangePassword(event){
+            const value = event.target.value;
             this.logInfo["password"] = value
     }
 
-    handleChangeUsername(event) { 
-        const value = event.target.value; 
+    handleChangeUsername(event) {
+        const value = event.target.value;
         this.logInfo["username"] = value
     }
 
@@ -74,7 +74,7 @@ class Login extends Component {
                         <Button  type="submit"> Log in</Button>
                     </ButtonGroup>
 
-                </FormGroup> 
+                </FormGroup>
                 </div>
                 </Form>
 
