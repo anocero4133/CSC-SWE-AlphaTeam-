@@ -19,6 +19,17 @@ public class TutorCoordinatorController {
 
     @Autowired
     private TutorCoordinatorService tutorCoordinatorService;
+    @PutMapping(path = "/{tutor_id}")
+    public ResponseEntity editTutor(@RequestBody User user, @PathVariable Long tutor_id){
+        User u = tutorCoordinatorService.findTutorById(tutor_id);
+        if (u == null){
+            return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
+        }
+        u = u.setUser(user);
+        tutorCoordinatorService.editTutor(u);
+        return new ResponseEntity(u, HttpStatus.OK);
+    }
+
     @PostMapping(path = "/tutor")
     public ResponseEntity addTutor(@RequestBody User user){
             User u = tutorCoordinatorService.addTutor(user);

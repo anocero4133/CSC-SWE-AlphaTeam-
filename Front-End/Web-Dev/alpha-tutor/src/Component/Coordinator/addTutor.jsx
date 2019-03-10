@@ -118,6 +118,8 @@ class AddTutor extends Component{
 
       tutor.roles.push(tutorRole);
       tutor.roles.push(studentRole)
+
+      
       var body = JSON.stringify(tutor);
       var url = DEVELOPMENT_URL + "/api/tutorCoordinator/tutor";
       await fetch(url, {

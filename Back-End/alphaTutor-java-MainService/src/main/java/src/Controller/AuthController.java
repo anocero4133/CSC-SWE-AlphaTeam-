@@ -35,13 +35,17 @@ public class AuthController {
         String password = json.getString("password");
         User user = userRepository.findUserByUserNameAndPassword(username, password) ;
         if (user == null){
-            return new ResponseEntity("User not foundl", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @PostMapping("/mail/sendCode/{email}")
     public ResponseEntity sendMail(@PathVariable String email) {
+        User user = userRepository.findUserByEmail(email);
+        if (user != null){
+            return new ResponseEntity("User has already registered" , HttpStatus.CONFLICT);
+        }
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         Random rnd = new Random();
@@ -62,7 +66,7 @@ public class AuthController {
     public ResponseEntity userForgetUsername(@PathVariable String email) {
             User user = userRepository.findUserByEmail(email)  ;
             if (user == null){
-                return null;
+                return new ResponseEntity("User not found" , HttpStatus.NOT_FOUND);
             }
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
@@ -80,18 +84,38 @@ public class AuthController {
 
     @PutMapping(path = "/forgetPassword/{email}")
     public ResponseEntity userForgetPassword(@PathVariable String email, @RequestBody Map<String, Object> map){
+
         User user = userRepository.findUserByEmail(email);
         if (user == null){
             return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
         }
         JSONObject json = new JSONObject(map);
         String passWord = json.getString("password");
+        if (passWord.length() < 8){
+            return new ResponseEntity("Password not enough length", HttpStatus.BAD_REQUEST);
+        }
         user.setPassword(passWord);
+        System.out.println(user);
         return new ResponseEntity(userRepository.save(user), HttpStatus.OK);
     }
-
-    @GetMapping(path = "/api/auth/{username}/{password}")
-    public User validateUser(@PathVariable String username, @PathVariable String password){
-        User user = userRepositorydd.
+    @PostMapping(path = "/sendPasswordReset/{email}")
+    public ResponseEntity sendPasswordReset(@PathVariable String email){
+        User user = userRepository.findUserByEmail(email)  ;
+        if (user == null){
+            return new ResponseEntity("User not found" , HttpStatus.NOT_FOUND);
+        }
+        MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        try {
+            helper.setTo(email);
+            helper.setText("Hi, Click here to reset the password: \n" + "http://localhost:3000/reset/password/" + email);
+            helper.setSubject("ALPHA TUTOR PASSWORD RESET");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+            return new ResponseEntity("Error sending the email", HttpStatus.FORBIDDEN);
+        }
+        sender.send(message);
+        return new ResponseEntity("Send username successfully", HttpStatus.OK);
     }
+
 }

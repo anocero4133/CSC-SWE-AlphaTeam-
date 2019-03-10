@@ -137,4 +137,34 @@ public class User {
     public void setAvailabilities(List<Availability> availabilities) {
         this.availabilities = availabilities;
     }
+
+    @Transient
+    public User setUser(User user){
+        if (user.availabilities != null) {
+            this.availabilities = user.availabilities;
+        }
+        if (user.courses != null) {
+            this.courses = user.courses;
+        }
+        if (user.email != null && !user.email.isEmpty()) {
+            this.email = user.email;
+        }
+        if (user.password != null && !user.password.isEmpty()) {
+            this.password = user.password;
+        }
+        if (user.userName!= null && !user.userName.isEmpty()) {
+            this.userName = user.userName;
+        }
+        if (user.firstName != null && !user.firstName.isEmpty()) {
+            this.firstName = user.firstName;
+        }
+        if (user.lastName != null && !user.lastName.isEmpty()) {
+            this.lastName = user.lastName;
+        }
+        if (user.roles != null) {
+            this.roles = user.roles;
+        }
+        return this;
+    }
+
 }

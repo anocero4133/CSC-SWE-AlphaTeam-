@@ -31,6 +31,11 @@ public class TutorCoordinatorService {
         }
         return false;
     }
+
+    public User findTutorById(Long id) {
+        return userRepository.findUserByUserId(id);
+    }
+
     public User addTutor(User user){
         if (userRepository.findUserByUserName(user.getUserName()) != null){
             return null;
@@ -74,6 +79,13 @@ public class TutorCoordinatorService {
         if (checkIfTutor(user.getRoles())) {
             user.setAvailabilities(availabilities);
             return availabilityRepository.saveAll(availabilities);
+        }
+        return null;
+    }
+
+    public User editTutor (User user){
+        if (checkIfTutor(user.getRoles())) {
+            return userRepository.save(user);
         }
         return null;
     }

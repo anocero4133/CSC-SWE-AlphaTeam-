@@ -11,13 +11,12 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { CardLink } from 'reactstrap';
 import CardMedia from '@material-ui/core/CardMedia';
-import swal from 'sweetalert';
-const Swal = require('sweetalert2');
-const DEVELOPMENT_URL = "http://localhost:8080/api/auth/";
+
+const DEVELOPMENT_URL = "http://localhost:8080/api/student/add";
 const styles = theme => ({
     margin: {
         margin: theme.spacing.unit,
-    },
+      },
     button: {
         margin: theme.spacing.unit,
     },
@@ -34,96 +33,41 @@ const styles = theme => ({
     },
 });
 
-class Login extends Component {
+class SignUp extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
+        this.state={
             isHidden: true
         }
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.signUp = this.signUp.bind(this);
     };
 
     logInfo = {
-        'username': '',
-        'password': ''
-    }
-
-    checkIfGSUEmail(email) {
-        if (email.endsWith("@gsu.edu") || email.endsWith("@student.gsu.edu")) {
-            return true;
-        }
-        return false;
-    }
-
-
-    signUp() {
-        Swal.fire({
-            title: 'Authentication',
-            input: 'text',
-            text: "Hi there, to use this app, you must be GSU student. Please have your email here and we will send you a code to authenticate",
-            inputAttributes: {
-                autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Send',
-            showLoaderOnConfirm: true,
-            preConfirm: (email) => {
-                if (this.checkIfGSUEmail(email) === false) {
-                    Swal.showValidationMessage(
-                        `Request failed: Not a GSU email`
-                    )
-                } else {
-                    var url = DEVELOPMENT_URL + "/mail/sendCode/" + email
-                    axios.post(url, {
-
-                    }).then((response=>{
-
-                    })).catch((error=>{
-                        console.log(error)
-                            Swal.showValidationMessage(
-                                `Request failed: This email has already been registered`
-                            )
-                    }))
-                }
-            },
-        }).then((result) => {
-            if (result.value) {
-                Swal.fire({
-                    title: 'Code authentication',
-                    input: 'text',
-                    text: "We sent you a code. Please have a code here",
-                    inputAttributes: {
-                        autocapitalize: 'off'
-                    },
-                    showCancelButton: true,
-                    confirmButtonText: 'Authenticate',
-                    showLoaderOnConfirm: true,
-                    preConfirm: (code) => {
-
-                    },
-                }).then((res) => {
-
-                })
-            }
-        })
-        // this.props.history.push('/signUp');
+        userName: '',
+        password: '', 
+        firstName : '',
+        lastName: '',
+        roles: [],
+        email: ''
+    };
+    handleCancel() { 
+        this.props.history.push('/');
     }
     async handleSubmit(event) {
         event.preventDefault();
         var body = JSON.stringify(this.logInfo);
-        var url = DEVELOPMENT_URL + "/login/"
-        axios.post(url, body, {
+        axios.post(DEVELOPMENT_URL, body, {
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
             console.log(response)
             this.setState({
-                isHidden: true
+                isHidden:true 
             })
         }).catch(err => {
             console.log("Heere is the rror")
@@ -142,13 +86,13 @@ class Login extends Component {
 
     render() {
         const { classes } = this.props;
-        var UserNotFound;
-        if (this.state.isHidden === false) {
-            UserNotFound = <div>
-                <Typography className={classes.pos} color="red" style={{ fontSize: 10, color: 'red' }}>
-                    User not found. Please check your username and password
-                    </Typography>
-            </div>
+        var UserNotFound;  
+        if (this.state.isHidden === false){
+            UserNotFound = <div> 
+                  <Typography className={classes.pos} color="red" style={{fontSize:10, color: 'red'}}>
+                        User not found. Please check your username and password
+                    </Typography> 
+                 </div>
         }
         return (
 
@@ -163,11 +107,39 @@ class Login extends Component {
                         <CardContent>
                             <Typography className={classes.title} color="textSecondary" gutterBottom>
                                 <TextField
+                                    id="email"
+                                    label="Email"
+                                    name="email"
+                                    onChange={this.handleChange}
+                                    autoComplete="username"
+                                    margin="normal"
+                                    type="email"
+                                    required
+                                />
+                                <br></br>
+                                <TextField
+                                    id="firstName"
+                                    label="First Name"
+                                    name="firstName"
+                                    onChange={this.handleChange}
+                                    margin="normal"
+                                    required
+                                />
+                                <br></br>
+                                <TextField
+                                    id="lastName"
+                                    label="Last Name"
+                                    name="lastName"
+                                    onChange={this.handleChange}
+                                    margin="normal"
+                                    required
+                                />
+                                 <br></br>
+                                <TextField
                                     id="username"
                                     label="Username"
                                     name="username"
                                     onChange={this.handleChange}
-                                    autoComplete="username"
                                     margin="normal"
                                     required
                                 />
@@ -178,26 +150,20 @@ class Login extends Component {
                                     name="password"
                                     type="password"
                                     onChange={this.handleChange}
-                                    autoComplete="password"
                                     margin="normal"
                                     required
                                 />
+
                             </Typography>
                             <Typography component="p">
-                                {UserNotFound}
+                            {UserNotFound}
                             </Typography>
                         </CardContent>
                         <CardActions>
                             <ButtonGroup>
-                                <Button variant="outlined" color="primary" className={classes.button} type="submit">Log in </Button>
-                                <Button variant="outlined" color="secondary" className={classes.button} onClick={this.signUp}> Sign up </Button>
+                                <Button variant="outlined" color="primary" className={classes.button} type="submit">Sign Up Now </Button>
+                                <Button variant="outlined" color="secondary" className={classes.button} onClick={this.handleCancel} > Cancel </Button>
                             </ButtonGroup>
-                        </CardActions>
-                        <CardActions>
-                            <CardLink href="/forget/username" >Forget username?</CardLink>
-                        </CardActions>
-                        <CardActions>
-                            <CardLink href="/forget/password">Forget password?</CardLink>
                         </CardActions>
                     </Form>
                 </Card>
@@ -206,8 +172,9 @@ class Login extends Component {
     }
 
 }
-Login.propTypes = {
+SignUp.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Login);
+export default withStyles(styles)(SignUp);
+;
