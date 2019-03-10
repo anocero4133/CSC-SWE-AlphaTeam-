@@ -9,8 +9,8 @@ import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 const Swal = require('sweetalert2');
-// var DEVELOPMENT_URL = "http://localhost:8080"
-var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
+var DEVELOPMENT_URL = "http://localhost:8080"
+// var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
 
 class AddTutor extends Component{
     // Declare the items
@@ -42,6 +42,17 @@ class AddTutor extends Component{
     }
     componentDidMount() {
       document.title = "Add tutor";
+      var username = localStorage.getItem("username");
+      var url = DEVELOPMENT_URL + "/api/auth/user/" + username;
+      return fetch(url)
+      .then(response => {
+          console.log(response) 
+      })
+      .catch(error => {
+          Swal.showValidationMessage(
+          `Request failed: This email has already been registered`
+          )
+      })
     }
     validation(tutor){
       if (tutor.firstName.length < 3 || tutor.firstName > 20){

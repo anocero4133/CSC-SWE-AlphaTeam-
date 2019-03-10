@@ -25,6 +25,16 @@ public class AuthController {
     private JavaMailSender sender;
     @Autowired
     private UserRepository userRepository;
+
+    @GetMapping(path = "/user/{username}")
+    public ResponseEntity getUserByUsername(@PathVariable String username){
+        User user = userRepository.findUserByUserName(username);
+        if (user == null){
+            return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(user, HttpStatus.OK);
+    }
+
     @PostMapping(path = "/login/")
     public ResponseEntity userLogIn(@Valid @RequestBody Map<String, Object> payload){
         JSONObject json = new JSONObject(payload);
@@ -40,7 +50,7 @@ public class AuthController {
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
-    @PostMapping("/mail/sendCode/{email}")
+    @GetMapping("/mail/sendCode/{email}")
     public ResponseEntity sendMail(@PathVariable String email) {
         User user = userRepository.findUserByEmail(email);
         if (user != null){

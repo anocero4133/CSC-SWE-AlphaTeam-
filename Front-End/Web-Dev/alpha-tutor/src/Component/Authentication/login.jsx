@@ -71,23 +71,31 @@ class Login extends Component {
             showCancelButton: true,
             confirmButtonText: 'Send',
             showLoaderOnConfirm: true,
+            allowOutsideClick: false,
             preConfirm: (email) => {
-                if (this.checkIfGSUEmail(email) === false) {
+                if (email === ""){
+                    Swal.showValidationMessage(
+                        `Request failed: Email can't be blank`
+                    )
+                }
+                else if (this.checkIfGSUEmail(email) === false) {
                     Swal.showValidationMessage(
                         `Request failed: Not a GSU email`
                     )
                 } else {
-                    var url = DEVELOPMENT_URL + "/mail/sendCode/" + email
-                    axios.post(url, {
-
-                    }).then((response=>{
-
-                    })).catch((error=>{
-                        console.log(error)
-                            Swal.showValidationMessage(
-                                `Request failed: This email has already been registered`
-                            )
-                    }))
+                    var url = DEVELOPMENT_URL + "mail/sendCode/" + email
+                    return fetch(url)
+                                .then(response => {
+                                    if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                    }
+                                 
+                                })
+                                .catch(error => {
+                                    Swal.showValidationMessage(
+                                    `Request failed: This email has already been registered`
+                                    )
+                                })
                 }
             },
         }).then((result) => {
@@ -100,6 +108,7 @@ class Login extends Component {
                         autocapitalize: 'off'
                     },
                     showCancelButton: true,
+                    allowOutsideClick: false,
                     confirmButtonText: 'Authenticate',
                     showLoaderOnConfirm: true,
                     preConfirm: (code) => {
@@ -121,7 +130,23 @@ class Login extends Component {
                 'Content-Type': 'application/json'
             }
         }).then(response => {
-            console.log(response)
+            var data = response.data;
+            var username = data.userName;
+            console.log(data)
+            var roles = data.roles; 
+            var isStudent = false;
+            for (var i = 0 ; i < roles.length; ++i){
+                if (roles[i].roleName === "Tutor" || roles[i].roleName === "Student"){
+                    isStudent = true
+                    break;
+                }
+            }
+            if (isStudent === true){
+                    this.props.history.push("/student");
+            }else {
+                    this.props.history.push("/coordinator");
+            }
+            localStorage.setItem("username", username);
             this.setState({
                 isHidden: true
             })
@@ -146,7 +171,8 @@ class Login extends Component {
         if (this.state.isHidden === false) {
             UserNotFound = <div>
                 <Typography className={classes.pos} color="red" style={{ fontSize: 10, color: 'red' }}>
-                    User not found. Please check your username and password
+                    User not found. <br></br>
+                    Check your username and password
                     </Typography>
             </div>
         }
