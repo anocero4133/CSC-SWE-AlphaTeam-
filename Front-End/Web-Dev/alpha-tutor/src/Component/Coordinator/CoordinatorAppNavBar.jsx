@@ -31,8 +31,13 @@ class SimpleTabs extends React.Component {
   state = {
     value: 0,
   };
-
+ 
   handleChange = (event, value) => {
+    if (value === 7){
+        localStorage.clear();
+        const { history } = this.props;
+         history.push("/");
+    }
     this.setState({ value });
   };
   render() {
@@ -46,6 +51,11 @@ class SimpleTabs extends React.Component {
             <Tab label="Add Tutor" />
             <Tab label="All Tutors" />
             <Tab label="Support" />
+            <Tab label=""/>
+            <Tab label=""/>
+            <Tab label=""/>
+            <Tab label=""/>
+            <Tab label="Log out"/>
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer><AddTutor/></TabContainer>}

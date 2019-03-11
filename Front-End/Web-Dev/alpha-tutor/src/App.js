@@ -9,22 +9,27 @@ import ForgetUsername from './Component/Authentication/forgetUsername';
 import ForgetPassword from './Component/Authentication/forgetpassword';
 import ResetPassword from './Component/Authentication/resetPassword';
 import SignUp from './Component/Authentication/signUp';
+import NotAllowed from './Component/Others/NotAllowed';
+import {ProtectedRoute} from './Component/Authentication/protected.route';
+import {PreLogInAuth} from './Component/Authentication/PreLogInAuth';
 class App extends Component {
-  
+
   render() {
     return (
       <Router>
           <Switch>
-            <Route path="/student" exact={true} component={Student}/>
-            <Route path="/coordinator" exact={true} component={Coordinator}/>
+            <ProtectedRoute path="/student" exact component={Student}/>
+            <ProtectedRoute path="/coordinator"  component={Coordinator}/>
             <Route path="/student/viewSchedule" exact={true} component={ViewSchedule}/>
-            <Route path="/"  exact={true} component={Login}/>
+            <PreLogInAuth path="/"  exact={true} component={Login}/>
             <Route path="/forget/username" exact={true} component={ForgetUsername}/>
             <Route path="/forget/password" exact={true} component={ForgetPassword}/>
             <Route path="/reset/password/:email" exact={true} component={ResetPassword}/>
             <Route path="/signUp/" exact={true} component={SignUp}/>
+            <Route path="/error/" exact={true} component={NotAllowed}/>
+            <Route path="*" component={()=> "404 NOT FOUND"}/>
           </Switch>
-      </Router>
+          </Router>
     );
   }
 }

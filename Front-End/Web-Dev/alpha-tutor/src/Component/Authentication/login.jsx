@@ -5,13 +5,14 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Link, withRouter } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { CardLink } from 'reactstrap';
 import CardMedia from '@material-ui/core/CardMedia';
-import swal from 'sweetalert';
+import { Route, Redirect } from 'react-router-dom';
 const Swal = require('sweetalert2');
 const DEVELOPMENT_URL = "http://localhost:8080/api/auth/";
 const styles = theme => ({
@@ -135,18 +136,22 @@ class Login extends Component {
             console.log(data)
             var roles = data.roles; 
             var isStudent = false;
+            var isTutor = false; 
+            var isCoordinator = false; 
+            var arrRoles = []
             for (var i = 0 ; i < roles.length; ++i){
-                if (roles[i].roleName === "Tutor" || roles[i].roleName === "Student"){
+                if (roles[i].roleName === "Student"){
                     isStudent = true
-                    break;
+                }else if (roles[i].roleName === "Tutor"){
+                    isTutor = true
+                }else if (roles[i].roleName === "Coordinator"){
+                    isCoordinator = true
                 }
-            }
-            if (isStudent === true){
-                    this.props.history.push("/student");
-            }else {
-                    this.props.history.push("/coordinator");
+                arrRoles.push(roles[i].roleName)
             }
             localStorage.setItem("username", username);
+            localStorage.setItem("roles", arrRoles);
+             window.location.reload();
             this.setState({
                 isHidden: true
             })
@@ -158,7 +163,9 @@ class Login extends Component {
             })
         })
     }
+    componentWillUnmount(){
 
+    }
     handleChange(event) {
         const value = event.target.value;
         const name = event.target.name
@@ -177,8 +184,7 @@ class Login extends Component {
             </div>
         }
         return (
-
-            <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }} >
                 <Card className={classes.card}>
                     <CardMedia
                         className={classes.media}

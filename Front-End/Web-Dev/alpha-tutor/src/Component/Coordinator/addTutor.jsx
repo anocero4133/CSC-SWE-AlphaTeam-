@@ -9,6 +9,8 @@ import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 const Swal = require('sweetalert2');
+const axios = require('axios');
+
 var DEVELOPMENT_URL = "http://localhost:8080"
 // var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
 
@@ -40,19 +42,9 @@ class AddTutor extends Component{
         this.handleCoursesPopUp  = this.handleCoursesPopUp.bind(this)
         this.removeCourseSelected = this.removeCourseSelected.bind(this)
     }
-    componentDidMount() {
+    async componentDidMount() {
       document.title = "Add tutor";
-      var username = localStorage.getItem("username");
-      var url = DEVELOPMENT_URL + "/api/auth/user/" + username;
-      return fetch(url)
-      .then(response => {
-          console.log(response) 
-      })
-      .catch(error => {
-          Swal.showValidationMessage(
-          `Request failed: This email has already been registered`
-          )
-      })
+    
     }
     validation(tutor){
       if (tutor.firstName.length < 3 || tutor.firstName > 20){
@@ -215,19 +207,19 @@ class AddTutor extends Component{
       const title = <h3> Tutor Register</h3>;
       var array = ["10:00 to 10:30", "10:30 to 11:00","11:00 to 11:30", "11:30 to 12:00", "12:00 to 12:30", "12:30 to 13:00", "13:00 to 13:30", "13:30 to 14:00", "14:00 to 14:30", "14:30 to 15:00", "15:00 to 15:30", "15:30 to 16:00", "16:00 to 16:30", "16:30 to 17:00"]
       const checkBoxesForMonday = array.map(arr => {
-          return  <td><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Monday, " + arr} color="primary" />}/></td>
+          return  <td key={arr}><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Monday, " + arr} color="primary" />}/></td>
       })
       const checkBoxesForTuesday = array.map(arr => {
-        return  <td><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Tuesday, " + arr} color="primary" />}/></td>
+        return  <td key={arr}><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Tuesday, " + arr} color="primary" />}/></td>
       })
       const checkBoxesForWednesday = array.map(arr => {
-        return  <td><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Wednesday, " + arr} color="primary" />}/></td>
+        return  <td key={arr}><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Wednesday, " + arr} color="primary" />}/></td>
        })
       const checkBoxesForThursday = array.map(arr => {
-        return  <td><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Thursday, " + arr} color="primary" />}/></td>
+        return  <td key={arr}><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Thursday, " + arr} color="primary" />}/></td>
         })
       const checkBoxesForFriday = array.map(arr => {
-        return  <td><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Friday, " + arr} color="primary" />}/></td>
+        return  <td key={arr}><FormControlLabel control={ <Checkbox checked={this.state.checkedItems.get(arr)} onChange={this.handleChangeAvailability} name={"Friday, " + arr} color="primary" />}/></td>
         })
       const courseSelected = this.state.coursesSelected.map(arr=>{
           return (
