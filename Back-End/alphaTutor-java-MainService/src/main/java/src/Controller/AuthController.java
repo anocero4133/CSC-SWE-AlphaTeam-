@@ -3,6 +3,7 @@ package src.Controller;
 import org.apache.http.HttpResponse;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,6 +17,7 @@ import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(path = "/api/auth")
@@ -25,7 +27,8 @@ public class AuthController {
     private JavaMailSender sender;
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
     @GetMapping(path = "/user/{username}")
     public ResponseEntity getUserByUsername(@PathVariable String username){
         User user = userRepository.findUserByUserName(username);
@@ -33,6 +36,16 @@ public class AuthController {
             return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(user, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/signUpCode/{email}/{code}")
+    public ResponseEntity verifySignUpCode(@PathVariable String email, @PathVariable  String code){
+        String correctCode = (String) redisTemplate.opsForValue().get(email);
+        if (correctCode.equalsIgnoreCase(code)){
+            redisTemplate.delete(email);
+            return new ResponseEntity("Code Verified", HttpStatus.OK);
+        }
+        return new ResponseEntity("Code not Verified", HttpStatus.FORBIDDEN);
     }
 
     @PostMapping(path = "/login/")
@@ -62,8 +75,11 @@ public class AuthController {
         try {
             helper.setTo(email);
             int code = 100000 + rnd.nextInt(900000);
-            helper.setText("Hi there, Please enter this code to the app to verify your identity: " +code);
+            helper.setText("Hi there, Please enter this code to the app to verify your identity: " +code +"\nPlease notice this code will expire in 1 hour");
             helper.setSubject("Alpha Tutor Verification");
+            // Add to redis
+            redisTemplate.opsForValue().set(email, code);
+            redisTemplate.expire(email, 1,TimeUnit.HOURS);
         } catch (MessagingException e) {
             e.printStackTrace();
             return new ResponseEntity("Error sending the email", HttpStatus.FORBIDDEN);

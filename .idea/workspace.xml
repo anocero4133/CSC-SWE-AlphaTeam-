@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d1bf0707-2628-4263-b99d-4f47d0250b4f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/src/main/java/src/Controller/CoordinatorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="d1bf0707-2628-4263-b99d-4f47d0250b4f" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/Back-End/alphaTutor-java-MainService/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -403,7 +400,7 @@
       <window_info anchor="bottom" id="Java Enterprise" order="8" />
       <window_info anchor="right" id="Capture Analysis" order="3" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3272727" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3272727" />
       <window_info anchor="bottom" id="Spring" order="7" weight="0.32952183" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.31479642" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3204578" />

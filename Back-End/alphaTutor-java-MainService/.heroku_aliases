@@ -1,1 +1,2 @@
 alias push="heroku deploy:jar target/alphaTutor-1.0-SNAPSHOT.jar -a tutor-service-back-end"
+alias redis="heroku redis:cli -a tutor-service-back-end -c tutor-service-back-end"
