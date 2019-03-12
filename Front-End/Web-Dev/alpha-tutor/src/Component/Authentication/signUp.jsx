@@ -11,8 +11,8 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { CardLink } from 'reactstrap';
 import CardMedia from '@material-ui/core/CardMedia';
-
-const DEVELOPMENT_URL = "http://localhost:8080/api/student/add";
+const Swal = require('sweetalert2');
+const DEVELOPMENT_URL = "http://localhost:8080/api/";
 const styles = theme => ({
     margin: {
         margin: theme.spacing.unit,
@@ -57,24 +57,120 @@ class SignUp extends Component {
     handleCancel() { 
         this.props.history.push('/');
     }
+    checkIfGSUEmail(email) {
+        if (email.endsWith("@gsu.edu") || email.endsWith("@student.gsu.edu")) {
+            return true;
+        }
+        return false;
+    }
+
     async handleSubmit(event) {
         event.preventDefault();
-        var body = JSON.stringify(this.logInfo);
-        axios.post(DEVELOPMENT_URL, body, {
-            headers: {
-                'Content-Type': 'application/json'
+            Swal.fire({
+            title: 'Authentication',
+            input: 'text',
+            text: "Hi there, to use this app, you must be GSU student. Please have your email here and we will send you a code to authenticate",
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Send',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false,
+            preConfirm: (email) => {
+                if (email === ""){
+                    Swal.showValidationMessage(
+                        `Request failed: Email can't be blank`
+                    )
+                }
+                else if (this.checkIfGSUEmail(email) === false) {
+                    Swal.showValidationMessage(
+                        `Request failed: Not a GSU email`
+                    )
+                } else {
+                    var url = DEVELOPMENT_URL + "auth/mail/sendCode/" + email
+                    return fetch(url)
+                                .then(response => {
+                                    if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                    }
+                                 
+                                })
+                                .catch(error => {
+                                    Swal.showValidationMessage(
+                                    `Request failed: This email has already been registered`
+                                    )
+                                })
+                }
+            },
+        }).then((result) => {
+            if (result.value) {
+                console.log(result.value);
+                Swal.fire({
+                    title: 'Code authentication',
+                    input: 'text',
+                    text: "We sent you a code. Please have a code here",
+                    inputAttributes: {
+                        autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    allowOutsideClick: false,
+                    confirmButtonText: 'Authenticate',
+                    showLoaderOnConfirm: true,
+                    preConfirm: (code) => {
+                        var url = DEVELOPMENT_URL + "auth/signUpCode/" + result.value + "/" + code;
+                        return fetch(url)
+                                .then(response => {
+                                    if (!response.ok) {
+                                    throw new Error(response.statusText)
+                                    }
+                                    // Setting the email 
+                                    this.logInfo.email = result.value;
+                                    var studentRole = {
+                                        "description": "CS student at GSU",
+                                        "roleName": "Student" 
+                                      }
+                                    this.logInfo.roles.push(studentRole);
+                                    console.log("Success authenticated "  , this.logInfo);
+                                    var body = JSON.stringify(this.logInfo);
+                                    var url = DEVELOPMENT_URL + "student/add";
+                                    axios.post(url, body, {
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    }).then(response => {
+                                        var data = response.data;
+                                        var username = data.userName;
+                                        console.log(data)
+                                        var roles = data.roles; 
+                                        var arrRoles = []
+                                        for (var i = 0 ; i < roles.length; ++i){
+                                            arrRoles.push(roles[i].roleName)
+                                        }
+                                        localStorage.setItem("username", username);
+                                        localStorage.setItem("roles", arrRoles);
+                                         window.location.reload();
+                                        this.setState({
+                                            isHidden: true
+                                        })
+                                    }).catch(err => {
+                                        console.log("Heere is the rror")
+                                        console.log(err)
+                                        this.setState({
+                                            isHidden: false
+                                        })
+                                    })
+                                })
+                                .catch(error => {
+                                    Swal.showValidationMessage(
+                                    `Request failed: Code not correct`
+                                    )
+                                }) 
+                    },
+                }).then((res) => {
+
+                })
             }
-        }).then(response => {
-            console.log(response)
-            this.setState({
-                isHidden:true 
-            })
-        }).catch(err => {
-            console.log("Heere is the rror")
-            console.log(err)
-            this.setState({
-                isHidden: false
-            })
         })
     }
 
@@ -107,17 +203,6 @@ class SignUp extends Component {
                         <CardContent>
                             <Typography className={classes.title} color="textSecondary" gutterBottom>
                                 <TextField
-                                    id="email"
-                                    label="Email"
-                                    name="email"
-                                    onChange={this.handleChange}
-                                    autoComplete="username"
-                                    margin="normal"
-                                    type="email"
-                                    required
-                                />
-                                <br></br>
-                                <TextField
                                     id="firstName"
                                     label="First Name"
                                     name="firstName"
@@ -138,7 +223,7 @@ class SignUp extends Component {
                                 <TextField
                                     id="username"
                                     label="Username"
-                                    name="username"
+                                    name="userName"
                                     onChange={this.handleChange}
                                     margin="normal"
                                     required

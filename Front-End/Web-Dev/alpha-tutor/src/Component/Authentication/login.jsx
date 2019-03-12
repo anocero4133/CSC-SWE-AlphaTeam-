@@ -56,87 +56,10 @@ class Login extends Component {
         'password': ''
     }
 
-    checkIfGSUEmail(email) {
-        if (email.endsWith("@gsu.edu") || email.endsWith("@student.gsu.edu")) {
-            return true;
-        }
-        return false;
-    }
-
+  
 
     signUp() {
-        Swal.fire({
-            title: 'Authentication',
-            input: 'text',
-            text: "Hi there, to use this app, you must be GSU student. Please have your email here and we will send you a code to authenticate",
-            inputAttributes: {
-                autocapitalize: 'off'
-            },
-            showCancelButton: true,
-            confirmButtonText: 'Send',
-            showLoaderOnConfirm: true,
-            allowOutsideClick: false,
-            preConfirm: (email) => {
-                if (email === ""){
-                    Swal.showValidationMessage(
-                        `Request failed: Email can't be blank`
-                    )
-                }
-                else if (this.checkIfGSUEmail(email) === false) {
-                    Swal.showValidationMessage(
-                        `Request failed: Not a GSU email`
-                    )
-                } else {
-                    var url = DEVELOPMENT_URL + "mail/sendCode/" + email
-                    return fetch(url)
-                                .then(response => {
-                                    if (!response.ok) {
-                                    throw new Error(response.statusText)
-                                    }
-                                 
-                                })
-                                .catch(error => {
-                                    Swal.showValidationMessage(
-                                    `Request failed: This email has already been registered`
-                                    )
-                                })
-                }
-            },
-        }).then((result) => {
-            if (result.value) {
-                console.log(result.value);
-                Swal.fire({
-                    title: 'Code authentication',
-                    input: 'text',
-                    text: "We sent you a code. Please have a code here",
-                    inputAttributes: {
-                        autocapitalize: 'off'
-                    },
-                    showCancelButton: true,
-                    allowOutsideClick: false,
-                    confirmButtonText: 'Authenticate',
-                    showLoaderOnConfirm: true,
-                    preConfirm: (code) => {
-                        var url = DEVELOPMENT_URL + "signUpCode/" + result.value + "/" + code;
-                        return fetch(url)
-                                .then(response => {
-                                    if (!response.ok) {
-                                    throw new Error(response.statusText)
-                                    }
-                                    this.props.history.push("/signUp/");
-                                })
-                                .catch(error => {
-                                    Swal.showValidationMessage(
-                                    `Request failed: Code not correct`
-                                    )
-                                }) 
-                    },
-                }).then((res) => {
-
-                })
-            }
-        })
-        // this.props.history.push('/signUp');
+        this.props.history.push('/signUp');
     }
     async handleSubmit(event) {
         event.preventDefault();
