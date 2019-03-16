@@ -16,7 +16,7 @@ public class StudentService {
     public User addUser(User user) { return userRepository.save(user); }
     public Iterable<User> viewUsers() {
         Iterable<User> users = userRepository.findAll();
-        List<User> tutors = new ArrayList<>();
+        List<User> tutors = new ArrayList<User>();
         for(User user : users) {
             if (user.getRoles().contains("Tutor")) {
                 tutors.add(user);

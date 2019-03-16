@@ -99,9 +99,9 @@ public class TutorCoordinatorService {
         }
         return null;
     }
-    public Iterable<User> getAllTutors(){
+    public List<User> getAllTutors(){
         Iterable<User> allUsers = userRepository.findAll();
-        List<User> tutors = new ArrayList<>();
+        List<User> tutors = new ArrayList<User>();
         for (User user: allUsers) {
             if (checkIfTutor(user.getRoles())){
                 tutors.add(user);

@@ -38,6 +38,16 @@ public class AuthController {
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
+    @GetMapping(path = "/{username}")
+    public ResponseEntity hello(@PathVariable String username){
+        User user = userRepository.findUserByUserName(username) ;
+        if (user == null){
+            return new ResponseEntity("User not found", HttpStatus.NOT_FOUND) ;
+        }
+        return new ResponseEntity(user, HttpStatus.OK);
+    }
+
+
     @GetMapping(path = "/signUpCode/{email}/{code}")
     public ResponseEntity verifySignUpCode(@PathVariable String email, @PathVariable  String code){
         String correctCode = (String) redisTemplate.opsForValue().get(email);
@@ -144,4 +154,5 @@ public class AuthController {
         return new ResponseEntity("Send username successfully", HttpStatus.OK);
     }
 
+    
 }

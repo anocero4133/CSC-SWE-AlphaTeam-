@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: src.ServiceTest.TutorServiceTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 2.838 s <<< FAILURE! - in src.ServiceTest.TutorServiceTest
+testGetAllTutors(src.ServiceTest.TutorServiceTest)  Time elapsed: 0.012 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'tutorCoordinatorController': Unsatisfied dependency expressed through field 'tutorCoordinatorService'; nested exception is org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'src.Service.TutorCoordinatorService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+Caused by: org.springframework.beans.factory.NoSuchBeanDefinitionException: No qualifying bean of type 'src.Service.TutorCoordinatorService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+
