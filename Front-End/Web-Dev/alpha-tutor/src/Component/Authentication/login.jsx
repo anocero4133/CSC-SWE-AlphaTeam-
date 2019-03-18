@@ -12,8 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import { CardLink } from 'reactstrap';
 import CardMedia from '@material-ui/core/CardMedia';
 import '../../CSS/LogInCss.css'
-const Swal = require('sweetalert2');
-const DEVELOPMENT_URL = "http://localhost:8080/api/auth/";
+
+const DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com/api/auth/";
+// const DEVELOPMENT_URL = "http://localhost:8080/api/auth/";
 const styles = theme => ({
     margin: {
         margin: theme.spacing.unit,

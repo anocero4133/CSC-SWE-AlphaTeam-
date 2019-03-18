@@ -23,7 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(path = "/api/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://tutor-gsu.herokuapp.com")
 public class AuthController {
     @Autowired
     private JavaMailSender sender;
@@ -160,7 +161,7 @@ public class AuthController {
         MimeMessageHelper helper = new MimeMessageHelper(message);
         try {
             helper.setTo(email);
-            helper.setText("Hi, Click here to reset the password: \n" + "http://localhost:3000/reset/password/" + email);
+            helper.setText("Hi, Click here to reset the password: \n" + "https://tutor-gsu.herokuapp.com/reset/password/" + email);
             helper.setSubject("ALPHA TUTOR PASSWORD RESET");
         } catch (MessagingException e) {
             e.printStackTrace();

@@ -7,12 +7,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
+import CircularIndeterminate from '../../Utils/Loading';
 import { withStyles } from '@material-ui/core/styles';
 const Swal = require('sweetalert2');
 const axios = require('axios');
 
-var DEVELOPMENT_URL = "http://localhost:8080"
-// var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
+// var DEVELOPMENT_URL = "http://localhost:8080"
+var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
 
 class AddTutor extends Component{
     // Declare the items
@@ -34,7 +35,8 @@ class AddTutor extends Component{
             tutor: this.tutor,
             checkedItems: new Map(),
             coursesSelected : [],
-            isCourseLoaded: false
+            isCourseLoaded: false,
+            isLoading : false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeAvailability = this.handleChangeAvailability.bind(this);
@@ -71,6 +73,7 @@ class AddTutor extends Component{
 
     async handleSubmit(event){
       //{username: "ds", password: "ssdad", firstname: "sdadsad", lastname: "dadsda"}
+      this.setState({isLoading: true})
       event.preventDefault(); 
       const { item } = this.state;
       var tutor = this.state.tutor ;
@@ -108,6 +111,7 @@ class AddTutor extends Component{
     }
     console.log(tutor.courses)
     if (this.validation(tutor) === false){
+        this.setState({isLoading: false})
       return;
     }
       var tutorRole = {
@@ -133,6 +137,7 @@ class AddTutor extends Component{
         },
         body: body
       }).then((response) => {
+        this.setState({isLoading: false})
         var errorCodes = [400, 401, 402, 403]
         console.log(response)
         if (errorCodes.includes(response['status']) ) {
@@ -203,6 +208,10 @@ class AddTutor extends Component{
 
     render() {
       const { classes } = this.props;
+
+      if (this.state.isLoading){
+        return <CircularIndeterminate />
+      }
 
       const title = <h3> Tutor Register</h3>;
       var array = ["10:00 to 10:30", "10:30 to 11:00","11:00 to 11:30", "11:30 to 12:00", "12:00 to 12:30", "12:30 to 13:00", "13:00 to 13:30", "13:30 to 14:00", "14:00 to 14:30", "14:30 to 15:00", "15:00 to 15:30", "15:30 to 16:00", "16:00 to 16:30", "16:30 to 17:00"]

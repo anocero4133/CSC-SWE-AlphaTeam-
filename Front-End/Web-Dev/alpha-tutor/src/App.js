@@ -12,6 +12,7 @@ import SignUp from './Component/Authentication/signUp';
 import NotAllowed from './Component/Others/NotAllowed';
 import {ProtectedRoute} from './Component/Authentication/protected.route';
 import {PreLogInAuth} from './Component/Authentication/PreLogInAuth';
+import TutorMainPage from './Component/Tutor/TutorMainPage';
 class App extends Component {
 
   render() {
@@ -20,7 +21,7 @@ class App extends Component {
           <Switch>
             <ProtectedRoute path="/student" exact component={Student}/>
             <ProtectedRoute path="/coordinator"  component={Coordinator}/>
-            <Route path="/student/viewSchedule" exact={true} component={ViewSchedule}/>
+            <ProtectedRoute path="/tutor"  exact={true} component={TutorMainPage}/>
             <PreLogInAuth path="/"  exact={true} component={Login}/>
             <Route path="/forget/username" exact={true} component={ForgetUsername}/>
             <Route path="/forget/password" exact={true} component={ForgetPassword}/>
