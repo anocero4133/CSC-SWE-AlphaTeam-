@@ -1,7 +1,11 @@
 package src.Model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;
@@ -29,6 +33,7 @@ public class User {
     private String lastName;
     @NotNull(message = "error.title.notnull")
     @Pattern(regexp=".+@.+\\.[a-z]+", message = "error.accountprofile.email.pattern")
+    @Column(unique = true)
     private String email;
     @Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
     @Column(unique = true, nullable = false)
@@ -43,6 +48,18 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id",
                     referencedColumnName = "id"))
     private List<Role> roles;
+
+    public User() {
+    }
+
+    public User(@NotNull(message = "error.title.notnull") @Size(min = 2, max = 20) String firstName, @NotNull(message = "error.title.notnull") @Size(min = 2, max = 20) String lastName, @NotNull(message = "error.title.notnull") @Pattern(regexp = ".+@.+\\.[a-z]+", message = "error.accountprofile.email.pattern") String email, @Size(min = 4, max = 255, message = "Minimum username length: 4 characters") String userName, @Size(min = 8, message = "Minimum password length: 8 characters") String password, List<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userName = userName;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public List<Role> getRoles() {
         return roles;
@@ -110,5 +127,17 @@ public class User {
         map.put("username", userName);
         map.put("roles", roles);
         return map;
+    }
+    @Override
+    public  String toString() {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+        }
+        catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

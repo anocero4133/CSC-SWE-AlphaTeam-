@@ -5,12 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import src.Model.Availability;
-import src.Model.Coordinator;
 import src.Model.Tutor;
-import src.Repository.TutorCoordinatorRepository;
 import src.Service.TutorCoordinatorService;
-
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController

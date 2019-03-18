@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import src.Model.Student;
-import src.Model.User;
 import src.Repository.StudentRepository;
 import src.Service.StudentService;
 

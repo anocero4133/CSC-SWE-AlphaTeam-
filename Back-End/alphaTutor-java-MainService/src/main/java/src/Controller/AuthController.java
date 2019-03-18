@@ -13,9 +13,7 @@ import src.Model.Student;
 import src.Model.User;
 import src.Repository.StudentRepository;
 import src.Repository.TutorCoordinatorRepository;
-import src.Repository.TutorRepository;
 import src.Repository.UserRepository;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
@@ -78,7 +76,7 @@ public class AuthController {
         if (studentRepository.findByEmail(student.getEmail()) != null){
             return new ResponseEntity("Student existed", HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity(studentRepository.save(student).convertStudentToMap(), HttpStatus.OK);
+        return new ResponseEntity(studentRepository.save(student), HttpStatus.OK);
     }
 
     @PostMapping("signUp/coordinator")
@@ -86,7 +84,7 @@ public class AuthController {
         if (tutorCoordinatorRepository.findByUserName(user.getUserName()) != null || tutorCoordinatorRepository.findByEmail(user.getEmail()) != null){
             return new ResponseEntity("User duplicated", HttpStatus.FORBIDDEN) ;
         }
-        return new ResponseEntity(tutorCoordinatorRepository.save(user).convertUserToMap(), HttpStatus.OK);
+        return new ResponseEntity(tutorCoordinatorRepository.save(user), HttpStatus.OK);
     }
 
 

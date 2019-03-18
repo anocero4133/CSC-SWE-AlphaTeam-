@@ -51,7 +51,7 @@ public class TutorCoordinatorService {
         return null;
     }
     public boolean deleteUserByUserName(String userName){
-        User user = userRepository.findByUserName(userName);
+        Tutor user = userRepository.findByUserName(userName);
         if (user == null){return false;}
         if (checkIfTutor(user.getRoles())) {
             userRepository.delete(user);
@@ -101,10 +101,10 @@ public class TutorCoordinatorService {
         }
         return null;
     }
-    public List<User> getAllTutors(){
-        Iterable<User> allUsers = userRepository.findAll();
-        List<User> tutors = new ArrayList<User>();
-        for (User user: allUsers) {
+    public List<Tutor> getAllTutors(){
+        Iterable<Tutor> allUsers = userRepository.findAll();
+        List<Tutor> tutors = new ArrayList<Tutor>();
+        for (Tutor user: allUsers) {
             if (checkIfTutor(user.getRoles())){
                 tutors.add(user);
             }
