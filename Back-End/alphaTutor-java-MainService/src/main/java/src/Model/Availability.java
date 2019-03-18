@@ -23,6 +23,12 @@ public class Availability {
     public Availability() {
     }
 
+    public Availability(@NotNull String startTime, @NotNull String startEnd, @NotNull String daily) {
+        this.startTime = startTime;
+        this.startEnd = startEnd;
+        this.daily = daily;
+    }
+
     public Long getAvailabilityId() {
 
         return availabilityId;

@@ -5,9 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import src.Model.Availability;
 import src.Model.Role;
+import src.Model.Tutor;
 import src.Model.User;
 import src.Repository.AvailabilityRepository;
-import src.Repository.UserRepository;
+import src.Repository.TutorRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 public class TutorCoordinatorService {
 
     @Autowired
-    private UserRepository userRepository;
+    private TutorRepository userRepository;
     @Autowired
     private AvailabilityRepository availabilityRepository;
 
@@ -33,14 +34,15 @@ public class TutorCoordinatorService {
     }
 
     public User findTutorById(Long id) {
-        return userRepository.findUserByUserId(id);
+        return userRepository.findByUserId(id);
     }
 
-    public User addTutor(User user){
-        if (userRepository.findUserByUserName(user.getUserName()) != null){
+    public User addTutor(Tutor user){
+
+        if (userRepository.findByUserName(user.getUserName()) != null){
             return null;
         }
-        if (userRepository.findUserByEmail(user.getEmail()) != null){
+        if (userRepository.findByEmail(user.getEmail()) != null){
             return null;
         }
         if (checkIfTutor(user.getRoles())) {
@@ -49,7 +51,7 @@ public class TutorCoordinatorService {
         return null;
     }
     public boolean deleteUserByUserName(String userName){
-        User user = userRepository.findUserByUserName(userName);
+        Tutor user = userRepository.findByUserName(userName);
         if (user == null){return false;}
         if (checkIfTutor(user.getRoles())) {
             userRepository.delete(user);
@@ -58,7 +60,7 @@ public class TutorCoordinatorService {
         return false;
     }
 
-    public boolean deleteUser(User user){
+    public boolean deleteUser(Tutor user){
         if (checkIfTutor(user.getRoles())) {
             userRepository.delete(user);
             return true;
@@ -66,7 +68,7 @@ public class TutorCoordinatorService {
         return false;
     }
 
-    public Iterable<Availability> addTutorAvailability(User user){
+    public Iterable<Availability> addTutorAvailability(Tutor user){
             if (checkIfTutor(user.getRoles())) {
                return availabilityRepository.saveAll(user.getAvailabilities()) ;
             }
@@ -74,7 +76,7 @@ public class TutorCoordinatorService {
     }
 
     public Iterable<Availability> addTutorAvailabilityByUsername(String userName, List<Availability> availabilities){
-        User user = userRepository.findUserByUserName(userName);
+        Tutor user = (Tutor)userRepository.findByUserName(userName);
         if (user == null) {return null;}
         if (checkIfTutor(user.getRoles())) {
             user.setAvailabilities(availabilities);
@@ -83,7 +85,7 @@ public class TutorCoordinatorService {
         return null;
     }
 
-    public User editTutor (User user){
+    public User editTutor (Tutor user){
         if (checkIfTutor(user.getRoles())) {
             return userRepository.save(user);
         }
@@ -91,7 +93,7 @@ public class TutorCoordinatorService {
     }
 
     public Iterable<Availability> editTutorSchedule(String username, List<Availability> availabilities){
-        User user = userRepository.findUserByUserName(username);
+        Tutor user = (Tutor)userRepository.findByUserName(username);
         if (user == null) {return null;}
         if (checkIfTutor(user.getRoles())){
             user.setAvailabilities(availabilities);
@@ -99,10 +101,10 @@ public class TutorCoordinatorService {
         }
         return null;
     }
-    public Iterable<User> getAllTutors(){
-        Iterable<User> allUsers = userRepository.findAll();
-        List<User> tutors = new ArrayList<>();
-        for (User user: allUsers) {
+    public List<Tutor> getAllTutors(){
+        Iterable<Tutor> allUsers = userRepository.findAll();
+        List<Tutor> tutors = new ArrayList<Tutor>();
+        for (Tutor user: allUsers) {
             if (checkIfTutor(user.getRoles())){
                 tutors.add(user);
             }

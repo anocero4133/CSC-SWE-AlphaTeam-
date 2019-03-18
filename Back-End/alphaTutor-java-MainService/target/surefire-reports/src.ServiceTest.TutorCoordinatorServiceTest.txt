@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: src.ServiceTest.TutorCoordinatorServiceTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.26 s <<< FAILURE! - in src.ServiceTest.TutorCoordinatorServiceTest
+initializationError(src.ServiceTest.TutorCoordinatorServiceTest)  Time elapsed: 0.007 s  <<< ERROR!
+java.lang.Exception: No runnable methods
+

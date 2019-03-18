@@ -1,6 +1,5 @@
 package src.Controller;
 
-import org.apache.http.HttpResponse;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -9,9 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
+import src.Model.Coordinator;
+import src.Model.Student;
 import src.Model.User;
+import src.Repository.StudentRepository;
+import src.Repository.TutorCoordinatorRepository;
 import src.Repository.UserRepository;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
@@ -26,17 +28,23 @@ public class AuthController {
     @Autowired
     private JavaMailSender sender;
     @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+    @Autowired
+    private TutorCoordinatorRepository tutorCoordinatorRepository;
+
     @GetMapping(path = "/user/{username}")
     public ResponseEntity getUserByUsername(@PathVariable String username){
-        User user = userRepository.findUserByUserName(username);
+        User user = userRepository.findByUserName(username);
         if (user == null){
             return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(user, HttpStatus.OK);
     }
+
 
     @GetMapping(path = "/signUpCode/{email}/{code}")
     public ResponseEntity verifySignUpCode(@PathVariable String email, @PathVariable  String code){
@@ -48,6 +56,7 @@ public class AuthController {
         return new ResponseEntity("Code not Verified", HttpStatus.FORBIDDEN);
     }
 
+
     @PostMapping(path = "/login/")
     public ResponseEntity userLogIn(@Valid @RequestBody Map<String, Object> payload){
         JSONObject json = new JSONObject(payload);
@@ -56,16 +65,33 @@ public class AuthController {
         }
         String username = json.getString("username");
         String password = json.getString("password");
-        User user = userRepository.findUserByUserNameAndPassword(username, password) ;
+        User user = userRepository.findByUserNameAndPassword(username, password) ;
         if (user == null){
             return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity(user, HttpStatus.OK);
     }
+    @PostMapping(path = "/signUp/student")
+    public ResponseEntity signUpStudent(@Valid @RequestBody Student student){
+        if (studentRepository.findByEmail(student.getEmail()) != null){
+            return new ResponseEntity("Student existed", HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity(studentRepository.save(student), HttpStatus.OK);
+    }
+
+    @PostMapping("signUp/coordinator")
+    public ResponseEntity addCoordinator (@Valid @RequestBody Coordinator user){
+        if (tutorCoordinatorRepository.findByUserName(user.getUserName()) != null || tutorCoordinatorRepository.findByEmail(user.getEmail()) != null){
+            return new ResponseEntity("User duplicated", HttpStatus.FORBIDDEN) ;
+        }
+        return new ResponseEntity(tutorCoordinatorRepository.save(user), HttpStatus.OK);
+    }
+
+
 
     @GetMapping("/mail/sendCode/{email}")
     public ResponseEntity sendMail(@PathVariable String email) {
-        User user = userRepository.findUserByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user != null){
             return new ResponseEntity("User has already registered" , HttpStatus.CONFLICT);
         }
@@ -90,7 +116,7 @@ public class AuthController {
 
     @PostMapping(path = "/forgetUsername/{email}")
     public ResponseEntity userForgetUsername(@PathVariable String email) {
-            User user = userRepository.findUserByEmail(email)  ;
+            User user = userRepository.findByEmail(email)  ;
             if (user == null){
                 return new ResponseEntity("User not found" , HttpStatus.NOT_FOUND);
             }
@@ -111,7 +137,7 @@ public class AuthController {
     @PutMapping(path = "/forgetPassword/{email}")
     public ResponseEntity userForgetPassword(@PathVariable String email, @RequestBody Map<String, Object> map){
 
-        User user = userRepository.findUserByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user == null){
             return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
         }
@@ -122,11 +148,11 @@ public class AuthController {
         }
         user.setPassword(passWord);
         System.out.println(user);
-        return new ResponseEntity(userRepository.save(user), HttpStatus.OK);
+        return new ResponseEntity(studentRepository.save((Student)user), HttpStatus.OK);
     }
     @PostMapping(path = "/sendPasswordReset/{email}")
     public ResponseEntity sendPasswordReset(@PathVariable String email){
-        User user = userRepository.findUserByEmail(email)  ;
+        User user = userRepository.findByEmail(email)  ;
         if (user == null){
             return new ResponseEntity("User not found" , HttpStatus.NOT_FOUND);
         }
@@ -143,5 +169,6 @@ public class AuthController {
         sender.send(message);
         return new ResponseEntity("Send username successfully", HttpStatus.OK);
     }
+
 
 }

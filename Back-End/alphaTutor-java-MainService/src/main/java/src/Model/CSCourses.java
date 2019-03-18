@@ -17,6 +17,11 @@ public class CSCourses {
 
     private String courseCRN ;
 
+    public CSCourses(String csCourseName, String courseCRN) {
+        this.csCourseName = csCourseName;
+        this.courseCRN = courseCRN;
+    }
+
     public CSCourses() {
     }
 
