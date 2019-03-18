@@ -5,7 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import src.Model.Availability;
-import src.Model.User;
+import src.Model.Coordinator;
+import src.Model.Tutor;
+import src.Repository.TutorCoordinatorRepository;
 import src.Service.TutorCoordinatorService;
 
 import javax.validation.Valid;
@@ -19,27 +21,28 @@ public class TutorCoordinatorController {
 
     @Autowired
     private TutorCoordinatorService tutorCoordinatorService;
-    @PutMapping(path = "/{tutor_id}")
-    public ResponseEntity editTutor(@RequestBody User user, @PathVariable Long tutor_id){
-        User u = tutorCoordinatorService.findTutorById(tutor_id);
-        if (u == null){
-            return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
-        }
-        u = u.setUser(user);
-        tutorCoordinatorService.editTutor(u);
-        return new ResponseEntity(u, HttpStatus.OK);
-    }
+//    @PutMapping(path = "/{tutor_id}")
+//    public ResponseEntity editTutor(@RequestBody User user, @PathVariable Long tutor_id){
+//        User u = tutorCoordinatorService.findTutorById(tutor_id);
+//        if (u == null){
+//            return new ResponseEntity("User not found", HttpStatus.NOT_FOUND);
+//        }
+//        u = u.setUser(user);
+//        tutorCoordinatorService.editTutor(u);
+//        return new ResponseEntity(u, HttpStatus.OK);
+//    }
+
 
     @PostMapping(path = "/tutor")
-    public ResponseEntity addTutor(@RequestBody User user){
-            User u = tutorCoordinatorService.addTutor(user);
+    public ResponseEntity addTutor(@RequestBody Tutor user){
+            Tutor u = (Tutor) tutorCoordinatorService.addTutor(user);
             if (u == null){
                 return new ResponseEntity("error.notTutor", HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity(u, HttpStatus.OK);
+            return new ResponseEntity(u.convertTutorToMap(), HttpStatus.OK);
     }
     @PostMapping(path = "/tutor/schedule")
-     public ResponseEntity addTutorSchedule(@RequestBody User user){
+     public ResponseEntity addTutorSchedule(@RequestBody Tutor user){
             Iterable<Availability> u = tutorCoordinatorService.addTutorAvailability(user);
             if (u == null){
                 return new ResponseEntity("error.notTutor", HttpStatus.BAD_REQUEST);

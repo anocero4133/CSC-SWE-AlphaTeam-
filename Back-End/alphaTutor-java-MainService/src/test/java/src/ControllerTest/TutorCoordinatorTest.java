@@ -26,7 +26,7 @@ public class TutorCoordinatorTest {
 
     @Test
     public void test_FindTutorById() throws Exception{
-        User user = new User();
+//        User user = new User();
 
 //        when(tutorCoordinatorService.getAllTutors()).thenReturn()
     }

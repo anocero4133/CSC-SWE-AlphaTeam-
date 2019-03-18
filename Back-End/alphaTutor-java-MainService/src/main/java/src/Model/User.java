@@ -1,26 +1,31 @@
 package src.Model;
 
-import org.springframework.beans.factory.annotation.Required;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    @Column(name = "userId", updatable = false, nullable = false)
+    protected Long userId;
 
     @NotNull(message = "error.title.notnull")
-    @Size(min = 3, max = 20)
+    @Size(min = 2, max = 20)
     private String firstName;
 
     @NotNull(message = "error.title.notnull")
-    @Size(min = 3, max = 20)
+    @Size(min = 2, max = 20)
     private String lastName;
     @NotNull(message = "error.title.notnull")
     @Pattern(regexp=".+@.+\\.[a-z]+", message = "error.accountprofile.email.pattern")
@@ -28,42 +33,23 @@ public class User {
     @Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
     @Column(unique = true, nullable = false)
     private String userName;
-
     @Size(min = 8, message = "Minimum password length: 8 characters")
     private String password;
 
-    @NotNull
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns
+    @JoinTable(name = "RoleUser", joinColumns
             = @JoinColumn(name = "user_id",
             referencedColumnName = "userId"),
             inverseJoinColumns = @JoinColumn(name = "role_id",
                     referencedColumnName = "id"))
     private List<Role> roles;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "tutor_courses", joinColumns
-            = @JoinColumn(name = "user_id",
-            referencedColumnName = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "course_id",
-                    referencedColumnName = "csCourseId"))
-    private List<CSCourses> courses;
-
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "tutor_availability", joinColumns
-            = @JoinColumn(name = "user_id",
-            referencedColumnName = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "availability_id",
-                    referencedColumnName = "availabilityId"))
-    private List<Availability> availabilities;
-
-
-    public User(@NotNull(message = "error.title.notnull") @Size(min = 5, max = 20) String firstName) {
-        this.firstName = firstName;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public User() {
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public Long getUserId() {
@@ -72,6 +58,22 @@ public class User {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -91,6 +93,7 @@ public class User {
     }
 
     public String getEmail() {
+
         return email;
     }
 
@@ -98,73 +101,14 @@ public class User {
         this.email = email;
     }
 
-    public String getUserName() {
-        return userName;
+    public Map<String,Object>  convertUserToMap(){
+        Map<String, Object>  map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("firstName", firstName);
+        map.put("lastName", lastName);
+        map.put("email", email);
+        map.put("username", userName);
+        map.put("roles", roles);
+        return map;
     }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public List<CSCourses> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<CSCourses> courses) {
-        this.courses = courses;
-    }
-
-    public List<Availability> getAvailabilities() {
-        return availabilities;
-    }
-
-    public void setAvailabilities(List<Availability> availabilities) {
-        this.availabilities = availabilities;
-    }
-
-    @Transient
-    public User setUser(User user){
-        if (user.availabilities != null) {
-            this.availabilities = user.availabilities;
-        }
-        if (user.courses != null) {
-            this.courses = user.courses;
-        }
-        if (user.email != null && !user.email.isEmpty()) {
-            this.email = user.email;
-        }
-        if (user.password != null && !user.password.isEmpty()) {
-            this.password = user.password;
-        }
-        if (user.userName!= null && !user.userName.isEmpty()) {
-            this.userName = user.userName;
-        }
-        if (user.firstName != null && !user.firstName.isEmpty()) {
-            this.firstName = user.firstName;
-        }
-        if (user.lastName != null && !user.lastName.isEmpty()) {
-            this.lastName = user.lastName;
-        }
-        if (user.roles != null) {
-            this.roles = user.roles;
-        }
-        return this;
-    }
-
 }

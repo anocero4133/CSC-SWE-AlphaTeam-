@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import src.Model.Student;
 import src.Model.User;
+import src.Repository.StudentRepository;
 import src.Service.StudentService;
 
 @RestController
@@ -13,14 +15,12 @@ import src.Service.StudentService;
 public class StudentController {
     @Autowired
     private StudentService studentService;
-
+    @Autowired
+    private StudentRepository studentRepository;
     @PostMapping(path = "/add")
-    public ResponseEntity register(@RequestBody User user) {
-        User u = studentService.addUser(user);
-        if (u == null) {
-            return new ResponseEntity("error.not Tutor", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity(u, HttpStatus.OK);
+    public ResponseEntity register(@RequestBody Student user) {
+        studentRepository.save(user) ;
+        return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @GetMapping(path = "/view")
