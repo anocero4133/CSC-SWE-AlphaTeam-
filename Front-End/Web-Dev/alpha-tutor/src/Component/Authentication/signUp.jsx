@@ -135,7 +135,7 @@ class SignUp extends Component {
                                     this.logInfo.roles.push(studentRole);
                                     console.log("Success authenticated "  , this.logInfo);
                                     var body = JSON.stringify(this.logInfo);
-                                    var url = DEVELOPMENT_URL + "signUp/student";
+                                    var url = DEVELOPMENT_URL + "auth/signUp/student";
                                     axios.post(url, body, {
                                         headers: {
                                             'Content-Type': 'application/json'
