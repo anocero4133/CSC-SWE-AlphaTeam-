@@ -49,6 +49,11 @@ public class User {
                     referencedColumnName = "id"))
     private List<Role> roles;
 
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//    private Chat chat;
+
+
+
     public User() {
     }
 
@@ -128,6 +133,13 @@ public class User {
         map.put("roles", roles);
         return map;
     }
+//    public Chat getChat() {
+//        return chat;
+//    }
+//
+//    public void setChat(Chat chat) {
+//        this.chat = chat;
+//    }
     @Override
     public  String toString() {
         try {

@@ -30,3 +30,10 @@
     transform: rotate(360deg);
   }
 }
+.message-send-form {
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid orangered;
+  flex-grow: 1;
+}

@@ -1,18 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: src.ControllerTest.TutorCoordinatorTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 1.263 s <<< FAILURE! - in src.ControllerTest.TutorCoordinatorTest
-test_getAllTutors(src.ControllerTest.TutorCoordinatorTest)  Time elapsed: 0.12 s  <<< FAILURE!
-java.lang.AssertionError: 
-JSON path "$"
-Expected: a collection with size <2>
-     but: collection size was <0>
-	at src.ControllerTest.TutorCoordinatorTest.test_getAllTutors(TutorCoordinatorTest.java:72)
-
-test_getAllSchedule(src.ControllerTest.TutorCoordinatorTest)  Time elapsed: 0.015 s  <<< FAILURE!
-java.lang.AssertionError: 
-JSON path "$"
-Expected: a collection with size <14>
-     but: collection size was <0>
-	at src.ControllerTest.TutorCoordinatorTest.test_getAllSchedule(TutorCoordinatorTest.java:79)
-
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.822 s - in src.ControllerTest.TutorCoordinatorTest

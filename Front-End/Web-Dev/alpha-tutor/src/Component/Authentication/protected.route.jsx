@@ -1,6 +1,5 @@
 
-import React, { Component } from 'react';
-import Student from '../Student/student';
+import React from 'react';
 import Coordinator from '../Coordinator/coordinatorMainPage';
 import { Route, Redirect } from 'react-router-dom';
 export const ProtectedRoute = ({ component: Component, ...rest }) => {

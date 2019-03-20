@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label ,ButtonGroup, Table} from 'reactstrap';
+import { Button, Container, Form, FormGroup,ButtonGroup, Table} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import swal from 'sweetalert';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import CircularIndeterminate from '../../Utils/Loading';
-import { withStyles } from '@material-ui/core/styles';
+import DeploymentUrl from '../../Utils/DeploymentUrl';
 const Swal = require('sweetalert2');
-const axios = require('axios');
-
-// var DEVELOPMENT_URL = "http://localhost:8080"
-var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
-
+var DEVELOPMENT_URL = DeploymentUrl.DEVELOPMENT_URL
 class AddTutor extends Component{
     // Declare the items
     tutor = {
@@ -109,7 +104,6 @@ class AddTutor extends Component{
           }
           tutor.courses.push(aCourse)
     }
-    console.log(tutor.courses)
     if (this.validation(tutor) === false){
         this.setState({isLoading: false})
       return;
@@ -139,7 +133,6 @@ class AddTutor extends Component{
       }).then((response) => {
         this.setState({isLoading: false})
         var errorCodes = [400, 401, 402, 403]
-        console.log(response)
         if (errorCodes.includes(response['status']) ) {
           swal("Error", "Tutor is registered", "error");
 
@@ -158,13 +151,12 @@ class AddTutor extends Component{
       const name = target.name;
       let item = { ...this.state.item };
       item[name] = value;
-      console.log(item)
       this.setState({ item });
     }
     handleChangeAvailability(event){ 
       const item = event.target.name;
     const isChecked = event.target.checked;
-    this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }), () => console.log(this.state.checkedItems));
+    this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
     }
 
     async handleCoursesPopUp() { 
@@ -207,8 +199,6 @@ class AddTutor extends Component{
 
 
     render() {
-      const { classes } = this.props;
-
       if (this.state.isLoading){
         return <CircularIndeterminate />
       }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, ButtonGroup } from 'reactstrap';
+import { Form,  ButtonGroup } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
@@ -9,12 +9,10 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { CardLink } from 'reactstrap';
 import CardMedia from '@material-ui/core/CardMedia';
+import DeploymentUrl from '../../Utils/DeploymentUrl';
 const Swal = require('sweetalert2');
-const DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com/api/";
-
-// const DEVELOPMENT_URL = "http://localhost:8080/api/";
+var DEVELOPMENT_URL = DeploymentUrl.DEVELOPMENT_URL
 const styles = theme => ({
     margin: {
         margin: theme.spacing.unit,
@@ -90,7 +88,7 @@ class SignUp extends Component {
                         `Request failed: Not a GSU email`
                     )
                 } else {
-                    var url = DEVELOPMENT_URL + "auth/mail/sendCode/" + email
+                    var url = DEVELOPMENT_URL + "/api/auth/mail/sendCode/" + email
                     return fetch(url)
                                 .then(response => {
                                     if (!response.ok) {
@@ -120,7 +118,7 @@ class SignUp extends Component {
                     confirmButtonText: 'Authenticate',
                     showLoaderOnConfirm: true,
                     preConfirm: (code) => {
-                        var url = DEVELOPMENT_URL + "auth/signUpCode/" + result.value + "/" + code;
+                        var url = DEVELOPMENT_URL + "/api/auth/signUpCode/" + result.value + "/" + code;
                         return fetch(url)
                                 .then(response => {
                                     if (!response.ok) {
@@ -135,7 +133,7 @@ class SignUp extends Component {
                                     this.logInfo.roles.push(studentRole);
                                     console.log("Success authenticated "  , this.logInfo);
                                     var body = JSON.stringify(this.logInfo);
-                                    var url = DEVELOPMENT_URL + "auth/signUp/student";
+                                    var url = DEVELOPMENT_URL + "/api/auth/signUp/student";
                                     axios.post(url, body, {
                                         headers: {
                                             'Content-Type': 'application/json'

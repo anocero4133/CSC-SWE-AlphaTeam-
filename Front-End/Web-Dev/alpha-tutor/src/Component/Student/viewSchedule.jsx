@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label , Table} from 'reactstrap';
+import {  Table} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import StudentAppNavBar from './StudentAppNavBar';
-import ReactSearchBox from 'react-search-box'
-// var DEVELOPMENT_URL = "http://localhost:8080"
-var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
+import ReactSearchBox from 'react-search-box';
+import DeploymentUrl from '../../Utils/DeploymentUrl';
+var DEVELOPMENT_URL = DeploymentUrl.DEVELOPMENT_URL;
 export default class ViewSchedule extends Component{ 
     constructor(props){
         super(props);
@@ -87,19 +85,24 @@ export default class ViewSchedule extends Component{
     }
     render() {
         const MondayTutors = this.listsTutorAvailable("Monday").map(arr=>{
-            return <td>{arr}</td>
+            var randomKey  = arr +  Math.random();
+            return <td key={randomKey} >{arr}</td>
         })
         const TuesdayTutors = this.listsTutorAvailable("Tuesday").map(arr=>{
-            return <td>{arr}</td>
+            var randomKey  = arr +  Math.random()
+            return <td key={randomKey}>{arr}</td>
         })
         const WednesdayTutors = this.listsTutorAvailable("Wednesday").map(arr=>{
-            return <td>{arr}</td>
+            var randomKey  = arr +  Math.random()
+            return <td key={randomKey}>{arr}</td>
         })
         const ThursdayTutors = this.listsTutorAvailable("Thursday").map(arr=>{
-            return <td>{arr}</td>
+            var randomKey  = arr +  Math.random()
+            return <td key={randomKey}>{arr}</td>
         })
         const FridayTutors = this.listsTutorAvailable("Friday").map(arr=>{
-            return <td>{arr}</td>
+            var randomKey  = arr +  Math.random()
+            return <td key={randomKey}>{arr}</td>
         })
         return (
             <div>

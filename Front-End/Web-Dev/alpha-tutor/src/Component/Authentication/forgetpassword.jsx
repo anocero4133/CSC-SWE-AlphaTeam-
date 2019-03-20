@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Form, FormGroup, ButtonGroup } from 'reactstrap';
+import { Form,  ButtonGroup } from 'reactstrap';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
@@ -10,9 +10,8 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
-var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com/api/auth/sendPasswordReset/";
-
-// var DEVELOPMENT_URL = "http://localhost:8080/api/auth/sendPasswordReset/";
+import DeploymentUrl from '../../Utils/DeploymentUrl';
+var DEVELOPMENT_URL = DeploymentUrl.DEVELOPMENT_URL + "/api/auth/sendPasswordReset/";
 const styles = theme => ({
     margin: {
         margin: theme.spacing.unit,
@@ -96,7 +95,7 @@ class ForgetPassword extends Component{
             if (this.state.isSendEmail === true){
                 ConfirmSendEmail = <div> 
                       <Typography className={classes.pos} color="red" style={{fontSize:10, color: 'green'}}>
-                            We have sent an username to your email.  
+                            We have sent a link to reset your password.
                         </Typography> 
                      </div>
             } 

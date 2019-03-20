@@ -5,7 +5,6 @@ import {
 } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
 const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
@@ -28,7 +27,6 @@ class AlignItemsList extends React.Component {
         document.title="Support"
       }
     render() {
-        const { classes } = this.props;
         return (
             <CardDeck>
                 <Card>
