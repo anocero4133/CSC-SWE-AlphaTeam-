@@ -31,12 +31,12 @@ class SimpleTabs extends React.Component {
   state = {
     value: 0,
   };
- 
+
   handleChange = (event, value) => {
-    if (value === 7){
-        localStorage.clear();
-        const { history } = this.props;
-         history.push("/");
+    if (value === 7) {
+      localStorage.clear();
+      const { history } = this.props;
+      history.push("/");
     }
     this.setState({ value });
   };
@@ -51,16 +51,16 @@ class SimpleTabs extends React.Component {
             <Tab label="Add Tutor" />
             <Tab label="All Tutors" />
             <Tab label="Support" />
-            <Tab label=""/>
-            <Tab label=""/>
-            <Tab label=""/>
-            <Tab label=""/>
-            <Tab label="Log out"/>
+            <Tab label="" />
+            <Tab label="" />
+            <Tab label="" />
+            <Tab label="" />
+            <Tab label="Log out" />
           </Tabs>
         </AppBar>
-        {value === 0 && <TabContainer><AddTutor/></TabContainer>}
-        {value === 1 && <TabContainer><ListTutor/></TabContainer>}
-        {value === 2 && <TabContainer><AlignItemsList/></TabContainer>}
+        {value === 0 && <TabContainer><AddTutor /></TabContainer>}
+        {value === 1 && <TabContainer><ListTutor /></TabContainer>}
+        {value === 2 && <TabContainer><AlignItemsList /></TabContainer>}
       </div>
     );
   }
