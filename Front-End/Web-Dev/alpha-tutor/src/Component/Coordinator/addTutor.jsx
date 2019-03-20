@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import { Button, Container, Form, FormGroup, Input, Label ,ButtonGroup, Table} from 'reactstrap';
+import { Button, Container, Form, FormGroup,ButtonGroup, Table} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import swal from 'sweetalert';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import CircularIndeterminate from '../../Utils/Loading';
-import { withStyles } from '@material-ui/core/styles';
 const Swal = require('sweetalert2');
-const axios = require('axios');
 
 // var DEVELOPMENT_URL = "http://localhost:8080"
 var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
@@ -207,8 +204,6 @@ class AddTutor extends Component{
 
 
     render() {
-      const { classes } = this.props;
-
       if (this.state.isLoading){
         return <CircularIndeterminate />
       }

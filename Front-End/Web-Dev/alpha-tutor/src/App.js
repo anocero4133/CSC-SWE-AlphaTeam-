@@ -3,7 +3,6 @@ import './App.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Student from './Component/Student/student';
 import Coordinator from './Component/Coordinator/coordinatorMainPage';
-import ViewSchedule from './Component/Student/viewSchedule';
 import Login from './Component/Authentication/login';
 import ForgetUsername from './Component/Authentication/forgetUsername';
 import ForgetPassword from './Component/Authentication/forgetpassword';
