@@ -77,12 +77,12 @@ class StudentAppNavBar extends React.Component {
         <AppBar position="static" style={{ background: '#2E3B55' }}>
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="View Schedule" />
-            <Tab label="" />
-            <Tab label="" />
-            <Tab label="" />
-            <Tab label="" />
-            <Tab label="" />
-            <Tab label="" />
+            <Tab disabled={true} />
+            <Tab disabled={true} />
+            <Tab disabled={true} />
+            <Tab disabled={true} />
+            <Tab disabled={true}/>
+            <Tab disabled={true} />
             <Tab label="Log out" />
           </Tabs>
         </AppBar>

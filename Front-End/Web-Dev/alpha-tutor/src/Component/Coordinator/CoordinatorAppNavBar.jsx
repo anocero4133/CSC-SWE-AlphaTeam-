@@ -51,10 +51,10 @@ class SimpleTabs extends React.Component {
             <Tab label="Add Tutor" />
             <Tab label="All Tutors" />
             <Tab label="Support" />
-            <Tab label="" />
-            <Tab label="" />
-            <Tab label="" />
-            <Tab label="" />
+            <Tab disabled={true} />
+            <Tab disabled={true}/>
+            <Tab disabled={true} />
+            <Tab disabled={true} />
             <Tab label="Log out" />
           </Tabs>
         </AppBar>
