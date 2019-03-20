@@ -10,10 +10,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
+import DeploymentUrl from '../../Utils/DeploymentUrl';
 import swal from 'sweetalert';
-
-var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com/api/auth/forgetPassword/";
-// var DEVELOPMENT_URL = "http://localhost:8080/api/auth/forgetPassword/";
+var DEVELOPMENT_URL = DeploymentUrl.DEVELOPMENT_URL + "/api/auth/forgetPassword/";
 const styles = theme => ({
     margin: {
         margin: theme.spacing.unit,

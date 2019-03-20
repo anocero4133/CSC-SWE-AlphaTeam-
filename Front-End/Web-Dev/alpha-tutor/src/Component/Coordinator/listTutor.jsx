@@ -5,9 +5,8 @@ import CircularIndeterminate from '../../Utils/Loading'
 import swal from 'sweetalert';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
-
-var DEVELOPMENT_URL = "http://localhost:8080"
-// var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
+import DeploymentUrl from '../../Utils/DeploymentUrl';
+var DEVELOPMENT_URL = DeploymentUrl.DEVELOPMENT_URL
  class ListTutor extends Component{
     constructor(props){
             super(props);

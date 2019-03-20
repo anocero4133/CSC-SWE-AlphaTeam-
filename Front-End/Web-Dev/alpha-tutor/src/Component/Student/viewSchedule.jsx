@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {  Table} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ReactSearchBox from 'react-search-box'
-var DEVELOPMENT_URL = "http://localhost:8080"
-// var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com"
+import ReactSearchBox from 'react-search-box';
+import DeploymentUrl from '../../Utils/DeploymentUrl';
+var DEVELOPMENT_URL = DeploymentUrl.DEVELOPMENT_URL;
 export default class ViewSchedule extends Component{ 
     constructor(props){
         super(props);

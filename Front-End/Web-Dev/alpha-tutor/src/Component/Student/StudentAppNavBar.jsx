@@ -47,7 +47,7 @@ class StudentAppNavBar extends React.Component {
         <AppBar position="static"  style={{ background: '#2E3B55' }}>
           <Tabs value={value} onChange={this.handleChange}>
             <Tab label="View Schedule" />
-            <Tab label="Chat With Tutor"/>
+            {/* <Tab label="Chat With Tutor"/> */}
             <Tab label=""/>
             <Tab label=""/>
             <Tab label=""/>
@@ -55,7 +55,7 @@ class StudentAppNavBar extends React.Component {
           </Tabs>
         </AppBar>
         {value === 0 && <TabContainer><ViewSchedule/></TabContainer>}
-        {value ===1 && <TabContainer><Chat/></TabContainer>}
+        {/* {value ===1 && <TabContainer><Chat/></TabContainer>} */}
       </div>
     );
   }

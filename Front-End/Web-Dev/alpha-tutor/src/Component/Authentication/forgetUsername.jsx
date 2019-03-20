@@ -10,9 +10,9 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
-var DEVELOPMENT_URL = "https://tutor-service-back-end.herokuapp.com/api/auth/forgetUsername/";
+import DeploymentUrl from '../../Utils/DeploymentUrl';
+var DEVELOPMENT_URL = DeploymentUrl.DEVELOPMENT_URL + "/api/auth/forgetUsername/";
 
-// var DEVELOPMENT_URL = "http://localhost:8080/api/auth/forgetUsername/";
 const styles = theme => ({
     margin: {
         margin: theme.spacing.unit,
