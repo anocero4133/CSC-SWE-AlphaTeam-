@@ -4,20 +4,14 @@ import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import src.Model.*;
 import src.Repository.StudentRepository;
 import src.Repository.TutorCoordinatorRepository;
 import src.Repository.TutorRepository;
 import src.Repository.UserRepository;
-
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 import static org.junit.Assert.*;
 

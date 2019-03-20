@@ -10,8 +10,8 @@ import src.Service.StudentService;
 
 @RestController
 @RequestMapping(value = "api/student")
-//@CrossOrigin(origins = "http://localhost:3000")
-@CrossOrigin(origins = "https://tutor-gsu.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "https://tutor-gsu.herokuapp.com")
 public class StudentController {
     @Autowired
     private StudentService studentService;

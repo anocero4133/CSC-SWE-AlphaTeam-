@@ -71,10 +71,12 @@ public class AuthControllerTest {
        HashMap<String, String> map = new HashMap<>();
        map.put("username", "emiaaan");
        map.put("password", "123123131233");
+       // Convert the map to JSON
        ObjectMapper mapper = new ObjectMapper();
        mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
        String requestJson=ow.writeValueAsString(map);
+
        this.mockMvc.perform(post("/api/auth/login/").contentType(MediaType.APPLICATION_JSON)
                .content(requestJson))
                .andExpect(status().isOk())
@@ -127,5 +129,8 @@ public class AuthControllerTest {
        this.mockMvc.perform(post("/api/auth/signUp/student").contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(student.toString()))
                .andExpect(status().isBadRequest());
    }
+
+
+
 
 }

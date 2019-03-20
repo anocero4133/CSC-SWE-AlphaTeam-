@@ -10,8 +10,8 @@ import src.Service.TutorCoordinatorService;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:3000")
-@CrossOrigin(origins = "https://tutor-gsu.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "https://tutor-gsu.herokuapp.com")
 @RequestMapping(value = "api/tutorCoordinator")
 public class TutorCoordinatorController {
 
@@ -67,5 +67,12 @@ public class TutorCoordinatorController {
     public ResponseEntity getAllTutors(){
         return new ResponseEntity(tutorCoordinatorService.getAllTutors(), HttpStatus.OK);
     }
-
+    @GetMapping(path = "/tutor/schedule/{username}")
+    public ResponseEntity getScheduleForTutor(@PathVariable(required = true) String username){
+        Iterable<Availability> availabilities = tutorCoordinatorService.getScheduleForTutor(username);
+        if (availabilities == null){
+            return new ResponseEntity("Tutor not found", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(availabilities, HttpStatus.OK);
+    }
 }

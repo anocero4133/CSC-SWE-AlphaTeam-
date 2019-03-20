@@ -17,7 +17,7 @@ import java.util.List;
 public class TutorCoordinatorService {
 
     @Autowired
-    private TutorRepository userRepository;
+    private TutorRepository tutorRepository;
     @Autowired
     private AvailabilityRepository availabilityRepository;
 
@@ -34,27 +34,37 @@ public class TutorCoordinatorService {
     }
 
     public User findTutorById(Long id) {
-        return userRepository.findByUserId(id);
+        return tutorRepository.findByUserId(id);
     }
 
     public User addTutor(Tutor user){
 
-        if (userRepository.findByUserName(user.getUserName()) != null){
+        if (tutorRepository.findByUserName(user.getUserName()) != null){
             return null;
         }
-        if (userRepository.findByEmail(user.getEmail()) != null){
+        if (tutorRepository.findByEmail(user.getEmail()) != null){
             return null;
         }
+        if (user.getAvailabilities().isEmpty()) {
+            return null;
+        }
+        if (user.getAvailabilities().size() > 20) {
+            return null;
+        }
+        if (user.getCourses().isEmpty()){
+            return null;
+        }
+
         if (checkIfTutor(user.getRoles())) {
-           return  userRepository.save(user);
+           return  tutorRepository.save(user);
         }
         return null;
     }
     public boolean deleteUserByUserName(String userName){
-        Tutor user = userRepository.findByUserName(userName);
+        Tutor user = tutorRepository.findByUserName(userName);
         if (user == null){return false;}
         if (checkIfTutor(user.getRoles())) {
-            userRepository.delete(user);
+            tutorRepository.delete(user);
             return true;
         }
         return false;
@@ -62,7 +72,7 @@ public class TutorCoordinatorService {
 
     public boolean deleteUser(Tutor user){
         if (checkIfTutor(user.getRoles())) {
-            userRepository.delete(user);
+            tutorRepository.delete(user);
             return true;
         }
         return false;
@@ -76,7 +86,7 @@ public class TutorCoordinatorService {
     }
 
     public Iterable<Availability> addTutorAvailabilityByUsername(String userName, List<Availability> availabilities){
-        Tutor user = (Tutor)userRepository.findByUserName(userName);
+        Tutor user = (Tutor) tutorRepository.findByUserName(userName);
         if (user == null) {return null;}
         if (checkIfTutor(user.getRoles())) {
             user.setAvailabilities(availabilities);
@@ -87,13 +97,13 @@ public class TutorCoordinatorService {
 
     public User editTutor (Tutor user){
         if (checkIfTutor(user.getRoles())) {
-            return userRepository.save(user);
+            return tutorRepository.save(user);
         }
         return null;
     }
 
     public Iterable<Availability> editTutorSchedule(String username, List<Availability> availabilities){
-        Tutor user = (Tutor)userRepository.findByUserName(username);
+        Tutor user = (Tutor) tutorRepository.findByUserName(username);
         if (user == null) {return null;}
         if (checkIfTutor(user.getRoles())){
             user.setAvailabilities(availabilities);
@@ -102,7 +112,7 @@ public class TutorCoordinatorService {
         return null;
     }
     public List<Tutor> getAllTutors(){
-        Iterable<Tutor> allUsers = userRepository.findAll();
+        Iterable<Tutor> allUsers = tutorRepository.findAll();
         List<Tutor> tutors = new ArrayList<Tutor>();
         for (Tutor user: allUsers) {
             if (checkIfTutor(user.getRoles())){
@@ -111,6 +121,14 @@ public class TutorCoordinatorService {
         }
         return tutors;
     }
+    public Iterable<Availability> getScheduleForTutor(String username){
+        Tutor tutor  = (Tutor) tutorRepository.findByUserName(username);
+        if (tutor == null){return null;}
+        return tutor.getAvailabilities();
+    }
 
-
+    public Tutor getTutor(String username){
+        Tutor tutor = (Tutor)tutorRepository.findByUserName(username);
+        return tutor;
+    }
 }

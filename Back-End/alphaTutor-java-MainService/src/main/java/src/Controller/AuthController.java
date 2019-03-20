@@ -23,8 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping(path = "/api/auth")
-//@CrossOrigin(origins = "http://localhost:3000")
-@CrossOrigin(origins = "https://tutor-gsu.herokuapp.com")
+@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "https://tutor-gsu.herokuapp.com")
 public class AuthController {
     @Autowired
     private JavaMailSender sender;
