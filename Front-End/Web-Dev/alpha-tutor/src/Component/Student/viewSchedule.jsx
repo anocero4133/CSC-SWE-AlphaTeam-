@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import {  Table} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ReactSearchBox from 'react-search-box';
-import DeploymentUrl from '../../Utils/DeploymentUrl';
-var DEVELOPMENT_URL = DeploymentUrl.DEVELOPMENT_URL;
+
 export default class ViewSchedule extends Component{ 
     constructor(props){
         super(props);
         this.state = {
-                tutors: [],
                 isSearchTutor: false,
                 searchName : ""
         };
@@ -17,32 +15,8 @@ export default class ViewSchedule extends Component{
     }
     
     possibleTimes = ["10:00 to 10:30", "10:30 to 11:00","11:00 to 11:30", "11:30 to 12:00", "12:00 to 12:30", "12:30 to 13:00", "13:00 to 13:30", "13:30 to 14:00", "14:00 to 14:30", "14:30 to 15:00", "15:00 to 15:30", "15:30 to 16:00", "16:00 to 16:30", "16:30 to 17:00"] 
-    tutorSearchName = []
-    async fetchAllTutors () { 
-        var url = DEVELOPMENT_URL + "/api/tutorCoordinator/tutor/all"
-        console.log(url);
-        const response = await fetch(url);
-        const body = await response.json();
-        var arrTutors = []
-        for (var i = 0; i < body.length; ++i) {
-            var contact = {
-                key: body[i]['firstName'],
-                value: body[i]["firstName"] + " "  + body[i]['lastName']
-            }
-            var tutor = {
-                name: contact.value,
-                availabilities : body[i]['availabilities']
-            }
-            this.tutorSearchName.push(contact);
-            arrTutors.push(tutor)
-        }
-        this.setState({
-            tutors: [...this.state.tutors, ...arrTutors]
-        })
-    }
-    async componentDidMount() {
-        this.fetchAllTutors();
-    }
+   
+
     handleIfSearchingEmpty(callback){
         if (callback === ""){
             this.setState({
@@ -53,7 +27,7 @@ export default class ViewSchedule extends Component{
     }
 
     listsTutorAvailable(daily) { 
-        const groups  = this.state.tutors;
+        const groups  = this.props.tutors;
         const isSearchTutor = this.state.isSearchTutor;
         var array = ["10:00 to 10:30", "10:30 to 11:00","11:00 to 11:30", "11:30 to 12:00", "12:00 to 12:30", "12:30 to 13:00", "13:00 to 13:30", "13:30 to 14:00", "14:00 to 14:30", "14:30 to 15:00", "15:00 to 15:30", "15:30 to 16:00", "16:00 to 16:30", "16:30 to 17:00"]
         var listTutorsForMonday = ["", "", "","","","","","","","","","","",""]
@@ -109,7 +83,7 @@ export default class ViewSchedule extends Component{
             <ReactSearchBox
         placeholder="Search tutor"
         value="Doe"
-        data={this.tutorSearchName}
+        data={this.props.tutorSearchName}
         onSelect={record => this.setState({isSearchTutor: true, searchName: record['value'] })
         }
         onChange={record => this.handleIfSearchingEmpty(record)}

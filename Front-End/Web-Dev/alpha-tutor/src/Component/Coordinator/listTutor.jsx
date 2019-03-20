@@ -37,7 +37,6 @@ var DEVELOPMENT_URL = DeploymentUrl.DEVELOPMENT_URL
                 isLoading: false
             }
         )
-        console.log(this.state.groups);
     }
     
     async remove(username) {
