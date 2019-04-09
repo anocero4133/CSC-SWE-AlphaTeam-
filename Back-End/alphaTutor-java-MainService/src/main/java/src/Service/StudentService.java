@@ -11,6 +11,14 @@ import java.util.List;
 
 @Service
 public class StudentService {
+    private static StudentService instance;
+    private StudentService {}
+    public static StudentService getInstance() {
+        if (instance == null) {
+            instance = new StudentService();
+        }
+        return instance;
+    }
     @Autowired
     private StudentRepository userRepository;
 
