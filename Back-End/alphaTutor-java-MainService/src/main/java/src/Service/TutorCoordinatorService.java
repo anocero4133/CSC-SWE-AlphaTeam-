@@ -20,9 +20,16 @@ public class TutorCoordinatorService {
     private TutorRepository tutorRepository;
     @Autowired
     private AvailabilityRepository availabilityRepository;
-
+    private  static TutorCoordinatorService instance;
 
     public TutorCoordinatorService() {
+    }
+
+    public static TutorCoordinatorService getInstance() {
+        if (instance == null) {
+            instance = new TutorCoordinatorService();
+        }
+        return instance;
     }
     private boolean checkIfTutor(List<Role> roles) {
         for (Role role : roles) {
