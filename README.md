@@ -20,15 +20,38 @@ Installation
 
 >Back-end software:
 >1. Make sure you have Java installed. (Version 1.8)
-You can install brew (dependency management package) by following this https://brew.sh/
-Once you install brew, you can install Java by brew cask install java
-2. Make sure you have Maven install 
-brew install maven 
+>You can install brew (dependency management package) by following this https://brew.sh/
+ Once you install brew, you can install Java by brew cask install java
+>2. Make sure you have Maven install 
+>brew install maven 
 
-Front-end software:
-1. Make sure you have Node js and NPM install 
-sudo apt-get install -y nodejs
-2. Install essential package for Node js
-sudo apt-get install -y build-essential
-3. Install React
-sudo npm install -g create-react-app
+>Front-end software:
+>1. Make sure you have Node js and NPM install 
+>sudo apt-get install -y nodejs
+>2. Install essential package for Node js
+>sudo apt-get install -y build-essential
+>3. Install React
+>sudo npm install -g create-react-app
+
+How to use?
+-----------
+>(*) Clone the project from https://github.com/anocero4133/CSC-SWE-AlphaTeam-
+>Back-end: 
+1. Navigate to Backend/alphaTutor-java-MainService
+2. Build the jar file using the command : mvn package
+3. Run the application : java -jar target/alphaTutor-1.0-SNAPSHOT.jar
+4. The application will run on localhost:8080
+
+
+>Front-end:
+1. Navigate to Front-End/Web-Dev/alpha-tutor/
+2. Install necessary dependencies: npm i or npm install 
+3. Run the application: npm start
+4. The application will run on localhost:3000
+
+>Host:
+The code has been deployed to heroku, you can access the services 
+Front-end: https://tutor-gsu.herokuapp.com/
+
+>If you want to see all the available API resources , you can go to https://tutor-service-back-end.herokuapp.com/swagger-ui.html
+
