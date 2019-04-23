@@ -1,4 +1,5 @@
-Software Engineering Assignment #1
+GSU Tutor App
+----------------------------------
 Members:
 Austin Nocero,
 Fatoumata Barry,
