@@ -55,3 +55,14 @@ Front-end: https://tutor-gsu.herokuapp.com/
 
 >If you want to see all the available API resources , you can go to https://tutor-service-back-end.herokuapp.com/swagger-ui.html
 
+Contribute
+----------
+>[Thong Tran](https://github.com/thongtran715)
+
+>[Hoa Pham](https://hoa-pham.github.io/) 
+
+>[Austin Nocero](https://github.com/anocero4133) 
+
+>James Harris
+
+>Fatime Barry
