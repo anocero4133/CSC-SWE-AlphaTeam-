@@ -6,9 +6,10 @@ Motivation
 ----------
 >Gives the students a better idea of the help they can receive based on the course they are enrolled in along with the info the app provides about available tutors at the current time/day.  This allows the student to go to the tutoring center at the most advantageous time for them. Increasing the efficiency of the operation of a tutoring center.
 
+
 Framework used
 --------------
->Built with Java Spring Boot
+>Built with Java Spring Boot, React
 
 Features:
 -------------
